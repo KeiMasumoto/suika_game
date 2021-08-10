@@ -62,6 +62,5 @@ class Ball{
     });
     this.matterWorld.add(this.World, ball);
   }
-
 }
 
