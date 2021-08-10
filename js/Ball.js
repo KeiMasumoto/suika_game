@@ -43,7 +43,7 @@ class Ball{
 
   fall(x){
     this.image.src = this.img;
-    const ball = this.bodies.circle(x, this.y, this.radius, {
+    const ball = this.bodies.circle(x, this.y + this.radius, this.radius, {
       //ボールを追加
       density: 0.01, // 密度: 単位面積あたりの質量
       frictionAir: 0.05, // 空気抵抗(空気摩擦)
