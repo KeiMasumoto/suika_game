@@ -1,3 +1,4 @@
+'use strict';
 class Stage{
   constructor(engine,runner,render,bodies,matterWorld,composite,composites,events,engineWorld)
     {

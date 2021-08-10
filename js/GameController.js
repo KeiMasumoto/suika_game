@@ -1,3 +1,4 @@
+'use strict';
 class GameController{
   constructor(){
     this.engine = Matter.Engine; //物理シュミレーションおよびレンダリングを管理するコントローラーとなるメソッド
