@@ -73,7 +73,7 @@ class GameController{
 
   run(){
     let choice = this.choice();
-    let ball = new Ball(choice.img,choice.radius,this.bodies, this.matterWorld, this.engineWorld);
+    let ball = new Ball(choice.img, choice.radius, this.bodies, this.matterWorld, this.engineWorld);
     this.initGame();
     let ball_1 = ball.set();
     this.render.run(this.rendering());
@@ -90,7 +90,7 @@ class GameController{
       ball.fall(x);
       setTimeout(() => {
         choice = this.choice();
-        ball = new Ball(choice.img,choice.radius,this.bodies, this.matterWorld, this.engineWorld);
+        ball = new Ball(choice.img, choice.radius, this.bodies, this.matterWorld, this.engineWorld);
         ball_1 = ball.set();
       },1000);
     })
