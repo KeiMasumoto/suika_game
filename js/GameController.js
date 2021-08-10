@@ -75,23 +75,23 @@ class GameController{
     let choice = this.choice();
     let ball = new Ball(choice.img, choice.radius, this.bodies, this.matterWorld, this.engineWorld);
     this.initGame();
-    let ball_1 = ball.set();
+    let setBall = ball.set();
     this.render.run(this.rendering());
     this.runner.run(this.Engine);
 
     document.addEventListener("mousemove", (event) => {
       const x = event.pageX;
-      ball.position(x,ball_1);
+      ball.position(x,setBall);
     });
 
     document.addEventListener("click", (event) => {
       const x = event.pageX;
-      ball.delete(ball_1);
+      ball.delete(setBall);
       ball.fall(x);
       setTimeout(() => {
         choice = this.choice();
         ball = new Ball(choice.img, choice.radius, this.bodies, this.matterWorld, this.engineWorld);
-        ball_1 = ball.set();
+        setBall = ball.set();
       },1000);
     })
   }
