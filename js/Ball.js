@@ -47,7 +47,6 @@ class Ball{
   //ballを生成するためには
   //1.imgタグをhtmlに挿入する
   //2.setAttributeでsrcを設定する
-  //3.radiusをwidhtとheightに設定する
   set(data){
     const imgTag = document.createElement("img")
     imgTag.setAttribute("src",data.img)
@@ -83,8 +82,8 @@ class Ball{
           texture: data.img, //スプライトに使うテクスチャ画像を指定
           xScale: 1,
           yScale: 1
-        }, 
-      }, 
+        },
+      },
       timeScale: 1.5, //時間の倍率を設定(1で1倍速)
     });
     this.matterWorld.add(this.World, ball);
