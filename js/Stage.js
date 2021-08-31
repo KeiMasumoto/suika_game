@@ -53,6 +53,5 @@ class Stage{
     init(){
       const ballList = ball.World.bodies.filter(ball => ball.label === "Circle Body")
       this.removeBalls(ballList)
-      
     }
 }

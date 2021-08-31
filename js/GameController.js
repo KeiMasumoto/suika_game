@@ -37,6 +37,7 @@ class GameController{
 
   initGame(){
     this.stage.create();
+    this.stage.init();
   }
 
 
