@@ -23,7 +23,8 @@ class Ball{
     this.canvas = document.getElementById("canvas");
     this.canvas.style.zIndex = "2";
   }
-  
+
+  // <=============================== ボールの生成 ===============================>
   random(max){
     const fortune = []
     let num = 0;
@@ -63,7 +64,7 @@ class Ball{
     imgTag.style.top = this.y + "px";
   }
 
-  delete(imgTag){
+  hiddenImg(imgTag){
     imgTag.remove();
   }
 
@@ -102,7 +103,7 @@ class Ball{
 
     this.canvas.addEventListener("click", (event) => {
       const x = event.pageX;
-      this.delete(setBall);
+      this.hiddenImg(setBall);
       this.create(x,0,data);
       this.canvas.style.pointerEvents = "none";
       //requestAnimationFrameでタイマー作って後で書き換える
@@ -114,37 +115,41 @@ class Ball{
     });
   }
 
-  removeCollisionBall(ballA, ballB){
-    this.matterWorld.remove(this.World, ballA);
-    this.matterWorld.remove(this.World, ballB);
-  }
+  // <=============================== ボールの消去 ===============================>
+   removeBall(ball){
+    this.matterWorld.remove(this.World, ball);
+   }
 
-  collisionBall(event){
+   // <=============================== ボール合体 ===============================>
+  union(event){
     const pairs = event.pairs;
-    let unionBall = null;
     const ballA = pairs[0].bodyA;
     const ballB = pairs[0].bodyB;
+    const balls =[ballA,ballB]
     let x = ballA.position.x;
     let y = ballA.position.y;
-
     if (ballA.circleRadius === ballB.circleRadius){
       for(let i = 0; i < this.imgs.length; i++){
         if(ballA.circleRadius === (this.imgs[i].radius)){
-          console.log(i);
-          console.log(this.imgs[i+1]);
           y -= this.imgs[i+1].radius;
-          unionBall = this.create(x, y, this.imgs[i+1]);
-          console.log(unionBall);
-          this.removeCollisionBall(ballA, ballB);
+          this.create(x, y, this.imgs[i+1]);
+          this.removeBalls(balls);
         }
       }
     }
   };
 
+  // <=============================== ボール合体した時の既存のボールの消去 ===============================>
+    removeBalls(ballList){
+      for(let i = 0; i < ballList.length; i++)
+      this.removeBall(ballList[i]);
+    }
+
+    // <=============================== 衝突検知 ===============================>
   collision(){
     const ball = this;
     ball.events.on(ball.Engine, "collisionStart", function(event) {
-      ball.collisionBall(event);
+      ball.union(event);
       // set.scoreText(Math.ceil(scorePoint));
       // gameClass.audioBound.playSound();
     });
