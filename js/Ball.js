@@ -22,6 +22,7 @@ class Ball{
     ]
     this.canvas = document.getElementById("canvas");
     this.canvas.style.zIndex = "2";
+    this.bool = "false";
   }
 
   // <=============================== ボールの生成 ===============================>
@@ -105,12 +106,23 @@ class Ball{
       this.hiddenImg(setBall);
       this.create(x,0,data);
       this.canvas.style.pointerEvents = "none";
-      //requestAnimationFrameでタイマー作って後で書き換える
-      setTimeout(() => {
-        data = this.choice();
-        setBall = this.set(data);
-        this.canvas.style.pointerEvents = "auto";
-      },1000);
+      //タイマーでクリック可能にしつつ、次弾装填
+      const ball = this;
+      const oldTime = Date.now();
+      let time = null;
+      let diff = null;
+      const update = () => {
+        time = Date.now();
+        diff = time - oldTime;
+        const id = requestAnimationFrame(update); 
+        if(diff > 1000){
+          data = ball.choice();
+          setBall = ball.set(data);
+          ball.canvas.style.pointerEvents = "auto";
+          cancelAnimationFrame(id);
+        }
+      };
+      requestAnimationFrame(update); 
     });
   }
 
