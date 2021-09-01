@@ -41,7 +41,6 @@ class GameController{
     this.ballManager.init();
   }
 
-
   run(){
     this.render.run(this.rendering());
     this.runner.run(this.Engine);
