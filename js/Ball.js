@@ -51,6 +51,7 @@ class Ball{
   set(data){
     const imgTag = document.createElement("img")
     imgTag.setAttribute("src",data.img)
+    imgTag.setAttribute("id","ballImg")
     imgTag.style.left = this.canvas.width /2 + "px" ;
     imgTag.style.position = "absolute";
     document.body.appendChild(imgTag);
@@ -92,39 +93,56 @@ class Ball{
     return ball;
   }
 
-  generate(){
-    let data = this.choice();
-    let setBall = this.set(data);
+  // generate(){
+  //   let data = this.choice();
+  //   let setBall = this.set(data);
 
-    document.addEventListener("mousemove", (event) => {
-      const x = event.pageX;
-      this.position(x,setBall,data.radius);
-    });
+  //   document.addEventListener("mousemove", (event) => {
+  //     const x = event.pageX;
+  //     this.position(x,setBall,data.radius);
+  //   });
 
-    this.canvas.addEventListener("click", (event) => {
-      const x = event.pageX;
-      this.hiddenImg(setBall);
-      this.create(x,0,data);
-      this.canvas.style.pointerEvents = "none";
-      //タイマーでクリック可能にしつつ、次弾装填
-      const ball = this;
-      const oldTime = Date.now();
-      let time = null;
-      let diff = null;
-      const update = () => {
-        time = Date.now();
-        diff = time - oldTime;
-        const id = requestAnimationFrame(update); 
-        if(diff > 1000){
-          data = ball.choice();
-          setBall = ball.set(data);
-          ball.canvas.style.pointerEvents = "auto";
-          cancelAnimationFrame(id);
-        }
-      };
-      requestAnimationFrame(update); 
-    });
-  }
+  //   this.canvas.addEventListener("click", (event) => {
+  //     const x = event.pageX;
+  //     this.hiddenImg(setBall);
+  //     this.create(x,0,data);
+  //     this.canvas.style.pointerEvents = "none";
+  //   });
+  // }
+
+  // generate(){
+  //   let data = this.choice();
+  //   let setBall = this.set(data);
+
+  //   document.addEventListener("mousemove", (event) => {
+  //     const x = event.pageX;
+  //     this.position(x,setBall,data.radius);
+  //   });
+
+  //   this.canvas.addEventListener("click", (event) => {
+  //     const x = event.pageX;
+  //     this.hiddenImg(setBall);
+  //     this.create(x,0,data);
+  //     this.canvas.style.pointerEvents = "none";
+  //     //タイマーでクリック可能にしつつ、次弾装填
+  //     const ball = this;
+  //     const oldTime = Date.now();
+  //     let time = null;
+  //     let diff = null;
+  //     const update = () => {
+  //       time = Date.now();
+  //       diff = time - oldTime;
+  //       const id = requestAnimationFrame(update); 
+  //       if(diff > 1000){
+  //         data = ball.choice();
+  //         setBall = ball.set(data);
+  //         ball.canvas.style.pointerEvents = "auto";
+  //         cancelAnimationFrame(id);
+  //       }
+  //     };
+  //     requestAnimationFrame(update); 
+  //   });
+  // }
 
   // <=============================== ボールの消去 ===============================>
    removeBall(ball){
