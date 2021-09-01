@@ -10,9 +10,10 @@ class GameController{
     this.composites = Matter.Composites; //物理演算領域の作成・操作するメソッドを含む
     this.events = Matter.Events;
     this.Engine = this.engine.create();
-    this.engineWorld = this.Engine.world;
+    this.World = this.Engine.world;
     this.canvas = document.getElementById("canvas");
-    this.stage = new Stage(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.engineWorld);
+    this.stage = new Stage(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
+    this.ballManager = new BallManager(this.bodies, this.matterWorld, this.Engine, this.World ,this.events);
   }
 
   get body(){
@@ -36,18 +37,16 @@ class GameController{
   }
 
   initGame(){
-    this.stage.create();
     this.stage.init();
+    this.ballManager.init();
   }
 
 
   run(){
-    let ball = new Ball(this.bodies, this.matterWorld, this.Engine, this.engineWorld, this.events);
-    this.initGame();
     this.render.run(this.rendering());
     this.runner.run(this.Engine);
-    ball.generate();
-    ball.collision();
+    this.initGame();
+    this.ballManager.collision();
   }
 };
 

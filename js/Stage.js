@@ -34,24 +34,9 @@ class Stage{
       ]);
     }
 
-    create(){
+    init(){
       this.createRectangle(this.width / 2, this.height-10, this.width, 20);//床
       this.createRectangle(-10, this.height / 2, 20, this.height);
       this.createRectangle(this.width + 10, this.height / 2, 20, this.height);
-    }
-
-    // <=============================== ステージ上のボール全削除 ===============================>
-    removeBall(ball){
-      this.matterWorld.remove(this.World, ball);
-     }
-
-     removeBalls(ballList){
-      for(let i = 0; i < ballList.length; i++)
-      this.removeBall(ballList[i]);
-    }
-
-    init(){
-      const ballList = ball.World.bodies.filter(ball => ball.label === "Circle Body")
-      this.removeBalls(ballList)
     }
 }
