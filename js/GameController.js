@@ -39,61 +39,14 @@ class GameController{
     this.stage.create();
   }
 
-  random(max){
-    const fortune = []
-    let num = 0;
-    for(let i = (max - 1);i > -1;i--){
-      for(let j = 0;j < i;j++){
-        fortune.push(num);
-      }
-      num += 1;
-    }
-
-    const random = fortune[Math.floor(Math.random() * fortune.length)];
-
-    return random
-  }
-
-  choice(){
-    const balls = [
-      {name : "ballTypeA", img : "./img/fruit/img_size_30.png", radius : 15},
-      {name : "ballTypeB", img : "./img/fruit/img_size_60.png", radius : 30},
-      {name : "ballTypeC", img : "./img/fruit/img_size_80.png", radius : 40},
-      {name : "ballTypeD", img : "./img/fruit/img_size_100.png", radius : 50},
-      {name : "ballTypeE", img : "./img/fruit/img_size_120.png", radius : 60},
-      {name : "ballTypeF", img : "./img/fruit/img_size_140.png", radius : 70},
-      {name : "ballTypeG", img : "./img/fruit/img_size_160.png", radius : 80},
-      {name : "ballTypeH", img : "./img/fruit/img_size_180.png", radius : 90},
-      {name : "ballTypeI", img : "./img/fruit/img_size_200.png", radius : 200},
-      {name : "ballTypeJ", img : "./img/fruit/img_size_220.png", radius : 110},
-    ];
-    
-    return balls[this.random(balls.length)];
-  }
 
   run(){
-    let choice = this.choice();
-    let ball = new Ball(choice.img, choice.radius, this.bodies, this.matterWorld, this.engineWorld);
+    let ball = new Ball(this.bodies, this.matterWorld, this.Engine, this.engineWorld, this.events);
     this.initGame();
-    let setBall = ball.set();
     this.render.run(this.rendering());
     this.runner.run(this.Engine);
-
-    document.addEventListener("mousemove", (event) => {
-      const x = event.pageX;
-      ball.position(x,setBall);
-    });
-
-    document.addEventListener("click", (event) => {
-      const x = event.pageX;
-      ball.delete(setBall);
-      ball.fall(x);
-      setTimeout(() => {
-        choice = this.choice();
-        ball = new Ball(choice.img, choice.radius, this.bodies, this.matterWorld, this.engineWorld);
-        setBall = ball.set();
-      },1000);
-    })
+    ball.generate();
+    ball.collision();
   }
 };
 
