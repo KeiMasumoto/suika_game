@@ -143,15 +143,5 @@ class Ball{
       for(let i = 0; i < ballList.length; i++)
       this.removeBall(ballList[i]);
     }
-
-    // <=============================== 衝突検知 ===============================>
-  collision(){
-    const ball = this;
-    ball.events.on(ball.Engine, "collisionStart", function(event) {
-      ball.union(event);
-      // set.scoreText(Math.ceil(scorePoint));
-      // gameClass.audioBound.playSound();
-    });
-  }
 }
 
