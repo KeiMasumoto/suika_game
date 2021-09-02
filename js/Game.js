@@ -12,8 +12,9 @@ class Game{
     this.Engine = this.engine.create();
     this.World = this.Engine.world;
     this.canvas = document.getElementById("canvas");
-    this.stage = new Stage(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
-    this.ballManager = new BallManager(this.bodies, this.matterWorld, this.Engine, this.World ,this.events);
+    this.wall = new Wall(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
+    this.floor = new Floor(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
+    this.ball = new Ball(this.bodies, this.matterWorld, this.Engine, this.World, this.events);
   }
 
   get body(){
@@ -37,43 +38,23 @@ class Game{
   }
 
   initGame(){
-    this.stage.init();
-    this.ballManager.init();
-  }
-
-  run(){
-    this.render.run(this.rendering());
-    this.runner.run(this.Engine);
-    this.initGame();
-    this.ballManager.collision();
-  }
-};
-
-class BallManager{
-  constructor(bodies, matterWorld, Engine, World, events){
-    this.bodies = bodies;
-    this.matterWorld = matterWorld;
-    this.Engine = Engine;
-    this.World = World;
-    this.events = events;
-    this.ball = new Ball(this.bodies, this.matterWorld, this.Engine, this.World, this.events);
-    this.gameOverHeight = 600;
-    this.canvas = document.getElementById("canvas");
-    this.ballHeight = null
+    const ballList = this.World.bodies.filter(ball => ball.label === "Circle Body");
+    this.removeBalls(ballList);
+    this.generate();
   }
     // <=============================== 衝突検知 ===============================>
   collision(){
-    const ballManager = this;
-    ballManager.events.on(ballManager.Engine, "collisionStart", function(event) {
-      ballManager.ball.union(event);
-      ballManager.ballHeight = ballManager.maxHeight();
+    const game = this;
+    game.events.on(game.Engine, "collisionStart", function(event) {
+      game.ball.union(event);
+      game.ballHeight = game.maxHeight();
     });
   }
 
   // <=============================== 次弾装填 ＆　終了条件　===============================>
   generate(){
     const ball = this.ball;
-    const ballManager = this;
+    const game = this;
     let data = ball.choice();
     let setBall = ball.set(data);
     document.addEventListener("mousemove", (event) => {
@@ -81,11 +62,11 @@ class BallManager{
       ball.position(x,setBall,data.radius);
     });
 
-    ballManager.canvas.addEventListener("click", (event) => {
+    game.canvas.addEventListener("click", (event) => {
       const x = event.pageX;
       ball.hiddenImg(setBall);
       ball.create(x,0,data);
-      ballManager.canvas.style.pointerEvents = "none";
+      game.canvas.style.pointerEvents = "none";
       //タイマーでクリック可能にしつつ、次弾装填
       const oldTime = Date.now();
       let time = null;
@@ -96,14 +77,13 @@ class BallManager{
         const id = requestAnimationFrame(update); 
         if(diff > 2000){
           //終了条件の高さ
-          if(ballManager.ballHeight < ballManager.gameOverHeight){
+          if(game.ballHeight < game.gameOverHeight){
             cancelAnimationFrame(id);
-            console.log("end");
           }
           else{
             data = ball.choice();
             setBall = ball.set(data);
-            ballManager.canvas.style.pointerEvents = "auto";
+            game.canvas.style.pointerEvents = "auto";
             cancelAnimationFrame(id);
           }
         }
@@ -120,12 +100,6 @@ class BallManager{
   removeBalls(ballList){
     for(let i = 0; i < ballList.length; i++)
     this.removeBall(ballList[i]);
-  }
-
-  init(){
-    const ballList = this.World.bodies.filter(ball => ball.label === "Circle Body");
-    this.removeBalls(ballList);
-    this.generate();
   }
      // <=============================== ボールの最高到達高さを算出 ===============================>
      //MaxHeight = ball.position.y + ball.radius
@@ -144,9 +118,19 @@ class BallManager{
     const height = ballList[index].position.y - ballList[index].circleRadius;
     return height;
   }
+
+
+  run(){
+    this.render.run(this.rendering());
+    this.runner.run(this.Engine);
+    this.wall.wall();
+    this.floor.floor();
+    this.initGame();
+    this.collision();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const gameController = new GameController();
-  gameController.run();
+  const game = new Game();
+  game.run();
 });
