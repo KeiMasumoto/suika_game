@@ -45,7 +45,11 @@ class GameController{
     this.render.run(this.rendering());
     this.runner.run(this.Engine);
     this.initGame();
-    this.ballManager.collision();
+
+    const ballManager = this.ballManager;
+    this.events.on(this.Engine, "collisionStart", function(event) {
+      ballManager.collisionEvent(event);
+    })
   }
 };
 
