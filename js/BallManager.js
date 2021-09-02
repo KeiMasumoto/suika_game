@@ -10,15 +10,13 @@ class BallManager{
     this.canvas = document.getElementById("canvas");
     this.ballHeight = null
   }
-    // <=============================== 衝突検知 ===============================>
-  collision(){
-    const ballManager = this;
-    ballManager.events.on(ballManager.Engine, "collisionStart", function(event) {
-      ballManager.ball.union(event);
-      ballManager.ballHeight = ballManager.maxHeight();
-    });
-  }
+    // <=============================== 衝突検知の際に発火 ===============================>
 
+  collisionEvent(event){
+      this.ball.union(event);
+      this.ballHeight = this.maxHeight();
+  }
+  
   // <=============================== 次弾装填 ＆　終了条件　===============================>
   generate(){
     const ball = this.ball;
