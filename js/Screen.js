@@ -3,6 +3,7 @@ class Screen{
   constructor(engine,runner,render,bodies,matterWorld,composite,composites,events,engineWorld)
     {
       this.canvas = document.getElementById("canvas");
+      this.canvas = document.getElementById("canvas");
       this.width = innerWidth;
       this.height = innerHeight;
       //Matter.js モジュール 初期設定
@@ -18,25 +19,8 @@ class Screen{
       this.bool = false;
     }
 
-    // <=============================== ステージ作成 ===============================>
-    createRectangle(positionX, positionY, rectWidth, rectHeight){
-      //Matter.Worldにadd
-      //第一引数がengine.world(engine = Engine.create())
-      this.Composite.add(this.world, [
-        this.Bodies.rectangle(positionX, positionY, rectWidth, rectHeight, {
-          isStatic: true, //固定する
-          render: {
-            fillStyle: "#000000", // 塗りつぶす色: CSSの記述法で指定
-            strokeStyle: "rgba(0, 0, 0, 0)", // 線の色: CSSの記述法で指定
-            lineWidth: 0, 
-          }, 
-        }), 
-      ]);
+    gameOver(){
+
     }
 
-    init(){
-      this.createRectangle(this.width / 2, this.height-10, this.width, 20);//床
-      this.createRectangle(-10, this.height / 2, 20, this.height);
-      this.createRectangle(this.width + 10, this.height / 2, 20, this.height);
-    }
 }
