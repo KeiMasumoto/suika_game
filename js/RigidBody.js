@@ -1,5 +1,5 @@
 'use strict';
-class Stage{
+class RigidBody{
   constructor(engine,runner,render,bodies,matterWorld,composite,composites,events,engineWorld)
     {
       this.canvas = document.getElementById("canvas");
@@ -19,7 +19,7 @@ class Stage{
     }
 
     // <=============================== ステージ作成 ===============================>
-    createRectangle(positionX, positionY, rectWidth, rectHeight){
+    create(positionX, positionY, rectWidth, rectHeight){
       //Matter.Worldにadd
       //第一引数がengine.world(engine = Engine.create())
       this.Composite.add(this.world, [
@@ -33,10 +33,19 @@ class Stage{
         }), 
       ]);
     }
+}
 
-    init(){
-      this.createRectangle(this.width / 2, this.height-10, this.width, 20);//床
+class Wall extends RigidBody {
+    // <=============================== 壁作成 ===============================>
+    Wall(){
       this.createRectangle(-10, this.height / 2, 20, this.height);
       this.createRectangle(this.width + 10, this.height / 2, 20, this.height);
     }
+}
+
+class Floor extends RigidBody {
+  // <=============================== 床作成 ===============================>
+  floor(){
+    this.createRectangle(this.width / 2, this.height-10, this.width, 20);
+  }
 }
