@@ -3,7 +3,7 @@ class Screen{
   constructor(engine,runner,render,bodies,matterWorld,composite,composites,events,engineWorld)
     {
       this.canvas = document.getElementById("canvas");
-      this.canvas = document.getElementById("canvas");
+      this.ending = document.getElementById("ending");
       this.width = innerWidth;
       this.height = innerHeight;
       //Matter.js モジュール 初期設定
@@ -20,7 +20,7 @@ class Screen{
     }
 
     gameOver(){
-
+      this.ending.style.display = "block";
     }
 
 }

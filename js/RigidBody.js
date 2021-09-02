@@ -37,15 +37,15 @@ class RigidBody{
 
 class Wall extends RigidBody {
     // <=============================== 壁作成 ===============================>
-    Wall(){
-      this.createRectangle(-10, this.height / 2, 20, this.height);
-      this.createRectangle(this.width + 10, this.height / 2, 20, this.height);
+    wall(){
+      this.create(-10, this.height / 2, 20, this.height);
+      this.create(this.width + 10, this.height / 2, 20, this.height);
     }
 }
 
 class Floor extends RigidBody {
   // <=============================== 床作成 ===============================>
   floor(){
-    this.createRectangle(this.width / 2, this.height-10, this.width, 20);
+    this.create(this.width / 2, this.height-10, this.width, 20);
   }
 }
