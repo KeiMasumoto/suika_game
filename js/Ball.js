@@ -53,6 +53,7 @@ class Ball{
     imgTag.setAttribute("src",data.img)
     imgTag.setAttribute("id","ballImg")
     imgTag.style.left = this.canvas.width /2 + "px" ;
+    imgTag.style.top = 30 + "px" ;
     imgTag.style.position = "absolute";
     document.body.appendChild(imgTag);
     return imgTag;
@@ -115,6 +116,7 @@ class Ball{
         }
       }
     }
+    return ballA.circleRadius
   };
 
   // <=============================== ボール合体した時の既存のボールの消去 ===============================>
