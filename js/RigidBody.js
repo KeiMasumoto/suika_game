@@ -1,5 +1,6 @@
 'use strict';
 class RigidBody{
+  //流石に下記で作成するWallクラスとFloorクラスの差異がほとんどないから継承の勉強、実践もかねてRigidBodyを継承させることにした。
   constructor(engine,runner,render,bodies,matterWorld,composite,composites,events,engineWorld)
     {
       this.canvas = document.getElementById("canvas");
@@ -20,8 +21,7 @@ class RigidBody{
 
     // <=============================== ステージ作成 ===============================>
     create(positionX, positionY, rectWidth, rectHeight){
-      //Matter.Worldにadd
-      //第一引数がengine.world(engine = Engine.create())
+      //剛体の四角を作成する
       this.Composite.add(this.world, [
         this.Bodies.rectangle(positionX, positionY, rectWidth, rectHeight, {
           isStatic: true, //固定する
@@ -37,8 +37,11 @@ class RigidBody{
 
 class Wall extends RigidBody {
     // <=============================== 壁作成 ===============================>
-    wall(){
+    rightWall(){
       this.create(-10, this.height / 2, 20, this.height);
+    }
+
+    leftWall(){
       this.create(this.width + 10, this.height / 2, 20, this.height);
     }
 }
