@@ -4,6 +4,8 @@ class Screen{
     {
       this.ending = document.getElementById("end");
       this.caution = document.getElementById("caution");
+      this.score = document.getElementById("score");
+      this.Sumscore = document.getElementById("ending-score-text");
       this.width = innerWidth;
       this.height = innerHeight;
       //Matter.js モジュール 初期設定
@@ -33,6 +35,13 @@ class Screen{
 
     init(){
         this.ending.style.display = "none";
+        this.hiddenBar();
+        this.score.innerText = 0;
+    }
+  
+    addScore(point){
+      this.score.innerText = point;
+      this.Sumscore.innerText =point;
     }
 
 }

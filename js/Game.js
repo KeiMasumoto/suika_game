@@ -15,10 +15,13 @@ class Game{
     this.endingTextBtn = document.getElementById("ending-text-wrapper");
     this.endingImgBtn = document.getElementById("ending-img");
     this.gameOverHeight = 500;//終了条件高さ
+    this.scorePoint = 0;//終了条件高さ
     this.wall = new Wall(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
     this.floor = new Floor(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
     this.ball = new Ball(this.bodies, this.matterWorld, this.Engine, this.World, this.events);
     this.screen = new Screen(this.engine,this.runner,this.render,this.bodies,this.matterWorld,this.composite,this.composites,this.events,this.World);
+    this.data = null;
+    this.setBall = null;
   }
 
   get body(){
@@ -44,33 +47,54 @@ class Game{
   init(){
     const ballList = this.World.bodies.filter(ball => ball.label === "Circle Body");
     this.removeBalls(ballList);
-    this.generate();
     this.screen.init();
+    this.data = this.ball.choice();
+    this.setBall = this.ball.set(this.data);
   }
     // <=============================== 衝突検知 ===============================>
   collision(){
     const game = this;
     game.events.on(game.Engine, "collisionStart", function(event) {
-      game.ball.union(event);
+      const point = game.union(event);
       game.ballHeight = game.maxHeight();
     });
   }
+
+     // <=============================== ボール合体 ===============================>
+     union(event){
+      const game = this;
+      const pairs = event.pairs;
+      const ballA = pairs[0].bodyA;
+      const ballB = pairs[0].bodyB;
+      const balls =[ballA,ballB]
+      let x = ballA.position.x;
+      let y = ballA.position.y;
+      if (ballA.circleRadius === ballB.circleRadius){
+        for(let i = 0; i < game.ball.imgs.length; i++){
+          if(ballA.circleRadius === (game.ball.imgs[i].radius)){
+            y -= game.ball.imgs[i+1].radius;
+            game.ball.create(x, y, game.ball.imgs[i+1]);
+            game.ball.removeBalls(balls);
+            game.scorePoint = game.scorePoint + ballA.circleRadius;
+            game.screen.addScore(game.scorePoint);
+          }
+        }
+      }
+    };
 
   // <=============================== 次弾装填 ＆ 終了条件 ===============================>
   generate(){
     const ball = this.ball;
     const game = this;
-    let data = ball.choice();
-    let setBall = ball.set(data);
     document.addEventListener("mousemove", (event) => {
       const x = event.pageX;
-      ball.position(x,setBall,data.radius);
+      ball.position(x,this.setBall,this.data.radius);
     });
 
     game.canvas.addEventListener("click", (event) => {
       const x = event.pageX;
-      ball.hiddenImg(setBall);
-      ball.create(x,0,data);
+      ball.hiddenImg(this.setBall);
+      ball.create(x,30,this.data);
       game.canvas.style.pointerEvents = "none";
       //タイマーでクリック可能にしつつ、次弾装填
       const oldTime = Date.now();
@@ -84,16 +108,17 @@ class Game{
           //終了条件の高さ
           if(game.ballHeight < game.gameOverHeight){
             game.screen.gameOver();
+            game.canvas.style.pointerEvents = "auto";
             cancelAnimationFrame(id);
-          }else if(game.ballHeight < (game.gameOverHeight + 200)){
-            data = ball.choice();
-            setBall = ball.set(data);
+          }else if(game.ballHeight < (game.gameOverHeight + 100)){
+            this.data = ball.choice();
+            this.setBall = ball.set(this.data);
             game.screen.visibleBar();
             game.canvas.style.pointerEvents = "auto";
             cancelAnimationFrame(id);
           }else{
-            data = ball.choice();
-            setBall = ball.set(data);
+            this.data = ball.choice();
+            this.setBall = ball.set(this.data);
             game.canvas.style.pointerEvents = "auto";
             game.screen.hiddenBar();
             cancelAnimationFrame(id);
@@ -138,6 +163,7 @@ class Game{
     this.wall.wall();
     this.floor.floor();
     this.init();
+    this.generate();
     this.collision();
     this.endingTextBtn.addEventListener("click", () =>{
       this.init();
