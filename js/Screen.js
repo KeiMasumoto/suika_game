@@ -1,47 +1,36 @@
 'use strict';
 class Screen{
-  constructor(engine,runner,render,bodies,matterWorld,composite,composites,events,World)
+  constructor()
     {
       this.ending = document.getElementById("end");
       this.caution = document.getElementById("caution");
       this.score = document.getElementById("score");
-      this.Sumscore = document.getElementById("ending-score-text");
+      this.sumScore = document.getElementById("ending-score-text");
       this.width = innerWidth;
       this.height = innerHeight;
-      //Matter.js モジュール 初期設定
-      this.Engine = engine; //物理シュミレーションおよびレンダリングを管理するコントローラーとなるメソッド
-      this.Runner = runner;
-      this.Render = render;
-      this.Bodies = bodies; //一般的な剛体モデルを作成するメソッドを含む
-      this.World = matterWorld; //物理演算領域の作成・操作するメソッドを含む
-      this.Composite = composite; //物理演算領域の作成・操作するメソッドを含む
-      this.Composites = composites;
-      this.Events = events;
-      this.world = World;
-      this.bool = false;
     }
 
     gameOver(){
-      this.ending.style.display = "block";
+      this.ending.style.display = "block";//エンディングの表示
     }
     
     visibleBar(){
-      this.caution.style.display = "block";
+      this.caution.style.display = "block";//ゲームの終了条件に近いことを警告
     }
 
     hiddenBar(){
-      this.caution.style.display = "";
+      this.caution.style.display = "";//ゲームの終了条件に近く無い
     }
 
     init(){
-        this.ending.style.display = "none";
-        this.hiddenBar();
-        this.score.innerText = 0;
+        this.ending.style.display = "none";//エンディングの非表示
+        this.hiddenBar();//警告の非表示
+        this.score.innerText = 0;//得点の初期化
     }
   
     addScore(point){
-      this.score.innerText = point;
-      this.Sumscore.innerText =point;
+      this.score.innerText = point;//得点のテキスト挿入
+      this.sumScore.innerText =point;//エンディング画面での得点のテキスト挿入
     }
 
 }
