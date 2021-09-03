@@ -8,24 +8,27 @@
   <title>suika game</title>
 </head>
 <body>
-  <div class="ending">
-    <div class="ending-sheet"></div>
-    <div class="ending-score">
-      <img src="./img/ending/img_tresure.png" alt="" class="ending-score-img">
-      <span class="ending-score-text">SCORE</span>
-    </div>
-    <div class="ending-text-wrapper">
-      <span class="ending-text">Moer Game</span>
-    </div>
-    <div class="ending-img">
-      <img src="./img/ending/img_replay.png" alt="">
+  <div class="ending-wrapper" id="end">
+    <div class="ending">
+      <div class="ending-sheet"></div>
+      <div class="ending-score">
+        <img src="./img/ending/img_tresure.png" alt="" class="ending-score-img">
+        <span class="ending-score-text">SCORE</span>
+      </div>
+      <div id="ending-text-wrapper" class="ending-text-wrapper">
+        <span class="ending-text">Moer Game</span>
+      </div>
+      <div id="ending-img" class="ending-img">
+        <img src="./img/ending/img_replay.png" alt="">
+      </div>
     </div>
   </div>
+  <img src="./img/playing/img_boader.png" alt="" class="caution" id="caution">
   <canvas id="canvas"></canvas>
   <script type="text/javascript" src="./js/matter.min.js" ></script>
   <script type="text/javascript" src="./js/Ball.js" ></script>
   <script type="text/javascript" src="./js/RigidBody.js" ></script>
-  <script type="text/javascript" src="./js/Stage.js" ></script>
+  <script type="text/javascript" src="./js/Screen.js" ></script>
   <script type="text/javascript" src="./js/Game.js" id = "script"></script>
 </body>
 </html>

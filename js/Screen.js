@@ -1,9 +1,9 @@
 'use strict';
 class Screen{
-  constructor(engine,runner,render,bodies,matterWorld,composite,composites,events,engineWorld)
+  constructor(engine,runner,render,bodies,matterWorld,composite,composites,events,World)
     {
-      this.canvas = document.getElementById("canvas");
-      this.ending = document.getElementById("ending");
+      this.ending = document.getElementById("end");
+      this.caution = document.getElementById("caution");
       this.width = innerWidth;
       this.height = innerHeight;
       //Matter.js モジュール 初期設定
@@ -15,12 +15,24 @@ class Screen{
       this.Composite = composite; //物理演算領域の作成・操作するメソッドを含む
       this.Composites = composites;
       this.Events = events;
-      this.world = engineWorld;
+      this.world = World;
       this.bool = false;
     }
 
     gameOver(){
       this.ending.style.display = "block";
+    }
+    
+    visibleBar(){
+      this.caution.style.display = "block";
+    }
+
+    hiddenBar(){
+      this.caution.style.display = "";
+    }
+
+    init(){
+        this.ending.style.display = "none";
     }
 
 }

@@ -12,9 +12,13 @@ class Game{
     this.Engine = this.engine.create();
     this.World = this.Engine.world;
     this.canvas = document.getElementById("canvas");
+    this.endingTextBtn = document.getElementById("ending-text-wrapper");
+    this.endingImgBtn = document.getElementById("ending-img");
+    this.gameOverHeight = 500;//終了条件高さ
     this.wall = new Wall(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
     this.floor = new Floor(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
     this.ball = new Ball(this.bodies, this.matterWorld, this.Engine, this.World, this.events);
+    this.screen = new Screen(this.engine,this.runner,this.render,this.bodies,this.matterWorld,this.composite,this.composites,this.events,this.World);
   }
 
   get body(){
@@ -37,10 +41,11 @@ class Game{
     return render
   }
 
-  initGame(){
+  init(){
     const ballList = this.World.bodies.filter(ball => ball.label === "Circle Body");
     this.removeBalls(ballList);
     this.generate();
+    this.screen.init();
   }
     // <=============================== 衝突検知 ===============================>
   collision(){
@@ -51,7 +56,7 @@ class Game{
     });
   }
 
-  // <=============================== 次弾装填 ＆　終了条件　===============================>
+  // <=============================== 次弾装填 ＆ 終了条件 ===============================>
   generate(){
     const ball = this.ball;
     const game = this;
@@ -78,12 +83,19 @@ class Game{
         if(diff > 2000){
           //終了条件の高さ
           if(game.ballHeight < game.gameOverHeight){
+            game.screen.gameOver();
             cancelAnimationFrame(id);
-          }
-          else{
+          }else if(game.ballHeight < (game.gameOverHeight + 200)){
+            data = ball.choice();
+            setBall = ball.set(data);
+            game.screen.visibleBar();
+            game.canvas.style.pointerEvents = "auto";
+            cancelAnimationFrame(id);
+          }else{
             data = ball.choice();
             setBall = ball.set(data);
             game.canvas.style.pointerEvents = "auto";
+            game.screen.hiddenBar();
             cancelAnimationFrame(id);
           }
         }
@@ -125,8 +137,14 @@ class Game{
     this.runner.run(this.Engine);
     this.wall.wall();
     this.floor.floor();
-    this.initGame();
+    this.init();
     this.collision();
+    this.endingTextBtn.addEventListener("click", () =>{
+      this.init();
+    })
+    this.endingImgBtn.addEventListener("click", () =>{
+      this.init();
+    })
   }
 }
 
