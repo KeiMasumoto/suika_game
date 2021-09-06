@@ -26,6 +26,7 @@ class Game{
     this.floor = new Floor(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
     this.ball = new Ball(this.bodies, this.matterWorld, this.Engine, this.World, this.events);
     this.screen = new Screen();
+    this.AudioPlayer = new AudioPlayer();
   }
 
   //物理エンジンのレンダリング
@@ -57,6 +58,7 @@ class Game{
     const game = this;
     //ゲームエンジンでのコリジョン判定。ゲーム内に剛体として生成したオブジェクトを対象として衝突判定をしてくれている。今回は床、壁、ボール。
     game.events.on(game.Engine, "collisionStart", function(event) {
+      game.AudioPlayer.playSound("bound");
       game.union(event);//同種のボールの合体
       game.ballHeight = game.maxHeight();//全ボールからもっともy座標の位置が高いものを取得
     });
@@ -75,6 +77,7 @@ class Game{
         for(let i = 0; i < game.ball.imgs.length; i++){
           if(ballA.circleRadius === (game.ball.imgs[i].radius)){
             y -= game.ball.imgs[i+1].radius;
+            game.AudioPlayer.playSound("union");
             game.ball.create(x, y, game.ball.imgs[i+1]);//衝突して合体したボールの半径より一つ大きいボールを生成
             game.removeBalls(balls);//差し替える
             game.scorePoint = game.scorePoint + ballA.circleRadius;//衝突して合体したボールの半径をとりあえず得点としている
