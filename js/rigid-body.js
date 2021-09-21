@@ -1,22 +1,16 @@
 'use strict';
 class RigidBody{
   //流石に下記で作成するWallクラスとFloorクラスの差異がほとんどないから継承の勉強、実践もかねてRigidBodyを継承させることにした。
-  constructor(engine, runner, render, bodies, matterWorld, composite, composites, events, engineWorld)
+  constructor(bodies, matterWorld, composite, engineWorld)
     {
       this.canvas = document.getElementById("canvas");
       this.width = innerWidth;
       this.height = innerHeight;
       //Matter.js モジュール 初期設定
-      this.Engine = engine; //物理シュミレーションおよびレンダリングを管理するコントローラーとなるメソッド
-      this.Runner = runner;
-      this.Render = render;
-      this.Bodies = bodies; //一般的な剛体モデルを作成するメソッドを含む
-      this.World = matterWorld; //物理演算領域の作成・操作するメソッドを含む
-      this.Composite = composite; //物理演算領域の作成・操作するメソッドを含む
-      this.Composites = composites;
-      this.Events = events;
+      this.Bodies = bodies;
+      this.World = matterWorld;
+      this.Composite = composite;
       this.world = engineWorld;
-      this.bool = false;
     }
 
   // <=============================== ステージ作成 ===============================>

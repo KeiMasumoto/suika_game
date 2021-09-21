@@ -9,11 +9,6 @@ class Screen {
     this.height = innerHeight;
     this.effectTag = null;
     this.tags = [];
-    // this.canvas = document.getElementById("canvas");
-    // this.ctx = this.canvas.getContext("2d");
-    // this.ctx.beginPath();
-    // this.ctx.fillStyle = "burlywood";
-    // this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   gameOver() {

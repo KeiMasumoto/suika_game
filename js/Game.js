@@ -7,7 +7,6 @@ class Game {
     this.bodies = Matter.Bodies; //一般的な剛体モデルを作成するメソッドを含む
     this.matterWorld = Matter.World; //物理演算領域の作成・操作するメソッドを含む
     this.composite = Matter.Composite; //物理演算領域の作成・操作するメソッドを含む
-    this.composites = Matter.Composites; //物理演算領域の作成・操作するメソッドを含む
     this.events = Matter.Events;
     this.Engine = this.engine.create();
     this.World = this.Engine.world;
@@ -22,9 +21,9 @@ class Game {
     this.setBall = null;
 
     //インスタンス生成
-    this.wall = new Wall(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
-    this.floor = new Floor(this.engine, this.runner, this.render, this.bodies, this.matterWorld, this.composite, this.composites, this.events, this.World);
-    this.ball = new Ball(this.bodies, this.matterWorld, this.Engine, this.World, this.events);
+    this.wall = new Wall(this.bodies, this.matterWorld, this.composite, this.World);
+    this.floor = new Floor(this.bodies, this.matterWorld, this.composite, this.World);
+    this.ball = new Ball(this.bodies, this.matterWorld, this.World);
     this.screen = new Screen();
     this.AudioPlayer = new AudioPlayer();
   }

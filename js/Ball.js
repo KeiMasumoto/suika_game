@@ -1,13 +1,11 @@
 'use strict';
 
 class Ball {
-  constructor(bodies, matterWorld, Engine, World, events) {
+  constructor(bodies, matterWorld, World) {
     this.image = new Image();
     this.bodies = bodies;
     this.matterWorld = matterWorld;
-    this.Engine = Engine;
     this.World = World;
-    this.events = events;
     this.imgs =[
       { name : "ballTypeA", img : "./img/fruit/img_size_30.png", radius : 15 },
       { name : "ballTypeB", img : "./img/fruit/img_size_60.png", radius : 30 },
