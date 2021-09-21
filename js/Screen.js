@@ -7,7 +7,6 @@ class Screen {
     this.sumScore = document.getElementById("ending-score-text");
     this.width = innerWidth;
     this.height = innerHeight;
-    this.effectTag = null;
     this.tags = [];
   }
 
