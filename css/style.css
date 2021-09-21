@@ -1,4 +1,4 @@
-html{
+html {
   left: 0;
   top: 0;
   margin: 0;
@@ -6,7 +6,7 @@ html{
   height: 100%;
 }
 
-body{
+body {
   left: 0;
   top: 0;
   margin: 0;
@@ -15,21 +15,30 @@ body{
   position: relative;
 }
 
-canvas{
+canvas {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-.score{
+.game-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: palegoldenrod;
+}
+
+.score {
   position: absolute;
   font-size: 24px;
   top: 0.4rem;
-  left: 0.4rem;
+  left: 01rem;
   z-index: 12;
+  color: yellow;
+  letter-spacing: 0.5rem;
 }
 
-.ending-wrapper{
+.ending-wrapper {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -39,7 +48,7 @@ canvas{
   display: none;
 }
 
-.ending{
+.ending {
   position: relative;
   width: 100%;
   height: 100%;
@@ -49,7 +58,7 @@ canvas{
   justify-content: center;
 }
 
-.ending-sheet{
+.ending-sheet {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -57,54 +66,62 @@ canvas{
   opacity: .5;
 }
 
-.ending-score-title,.ending-text-wrapper,.ending-img{
+.ending-score-title, .ending-text-wrapper, .ending-img {
   margin: 2rem 0;
   z-index: 11;
 }
 
-.ending-text-wrapper,.ending-img{
+.ending-text-wrapper, .ending-img {
   cursor: pointer;
 }
 
-.ending-score-title-text,.ending-score-title-img{
+.ending-score-title-text, .ending-score-title-img {
   margin: 0 1rem;
 }
 
-.ending-score-title{
+.ending-score-title {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.ending-score-title-text{
+.ending-score-title-text {
   font-size: 28px;
   color: red;
   letter-spacing: 0.4rem;
 }
 
-.ending-score{
+.ending-score {
   z-index: 11;
 }
 
-.ending-score-text{
+.ending-score-text {
   color: red;
   font-size: 36px;
 }
 
-.ending-text-wrapper{
+.score, .ending-score-text {
+  font-family: 'Gloria Hallelujah', cursive;
+  text-shadow:1px 1px 0 brown, -1px -1px 0 brown,
+              -1px 1px 0 brown, 1px -1px 0 brown,
+              0px 1px 0 brown,  0 -1px 0 brown,
+              -1px 0 0 brown, 1px 0 0 brown;
+}
+
+.ending-text-wrapper {
   border:solid 3px yellow;
   color: yellow;
   border-radius: 40px;
   padding: 1rem  4rem;
 }
-.ending-text{
+
+.ending-text {
   font-size: 30px;
   font-weight: 900;
 }
 
-.caution{
+.caution {
   position: absolute;
-  top: 500px;
   width: 100%;
   animation: flash 1s linear infinite;
   display: none;
@@ -118,4 +135,124 @@ canvas{
   50% {
     opacity: 0;
   }
+}
+
+@keyframes union0 {
+  0% {
+    opacity: 0;
+    transform: scale(0, 0) translate(0, 0);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1, 1) translate(0, 75%);
+  }
+}
+
+@keyframes union1 {
+  0% {
+    opacity: 0;
+    transform: scale(0, 0) translate(0, 0);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1, 1) translate(75%, 0);
+  }
+}
+
+@keyframes union2 {
+  0% {
+    opacity: 0;
+    transform: scale(0, 0) translate(0, 0);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1, 1) translate(75%, 75%);
+  }
+}
+
+@keyframes union3 {
+  0% {
+    opacity: 0;
+    transform: scale(0, 0) translate(0, 0);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1, 1) translate(0, -75%);
+  }
+}
+
+@keyframes union4 {
+  0% {
+    opacity: 0;
+    transform: scale(0, 0) translate(0, 0);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1, 1) translate(-75%, 0);
+  }
+}
+
+@keyframes union5 {
+  0% {
+    opacity: 0;
+    transform: scale(0, 0) translate(0, 0);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1, 1) translate(-75%, -75%);
+  }
+}
+
+.union-effect0{
+  position: absolute;
+  z-index: 15;
+  animation: union0 1s;
+}
+
+.union-effect1{
+  position: absolute;
+  z-index: 15;
+  animation: union1 1s;
+}
+
+.union-effect2{
+  position: absolute;
+  z-index: 15;
+  animation: union2 1s;
+}
+
+.union-effect3{
+  position: absolute;
+  z-index: 15;
+  animation: union3 1s;
+}
+
+.union-effect4{
+  position: absolute;
+  z-index: 15;
+  animation: union4 1s;
+}
+
+.union-effect5{
+  position: absolute;
+  z-index: 15;
+  animation: union5 1s;
 }

@@ -1,7 +1,7 @@
 'use strict';
 
-class Ball{
-  constructor(bodies, matterWorld, Engine, World, events){
+class Ball {
+  constructor(bodies, matterWorld, Engine, World, events) {
     this.image = new Image();
     this.bodies = bodies;
     this.matterWorld = matterWorld;
@@ -9,30 +9,30 @@ class Ball{
     this.World = World;
     this.events = events;
     this.imgs =[
-      {name : "ballTypeA", img : "./img/fruit/img_size_30.png", radius : 15},
-      {name : "ballTypeB", img : "./img/fruit/img_size_60.png", radius : 30},
-      {name : "ballTypeC", img : "./img/fruit/img_size_80.png", radius : 40},
-      {name : "ballTypeD", img : "./img/fruit/img_size_100.png", radius : 50},
-      {name : "ballTypeE", img : "./img/fruit/img_size_120.png", radius : 60},
-      {name : "ballTypeF", img : "./img/fruit/img_size_140.png", radius : 70},
-      {name : "ballTypeG", img : "./img/fruit/img_size_160.png", radius : 80},
-      {name : "ballTypeH", img : "./img/fruit/img_size_180.png", radius : 90},
-      {name : "ballTypeI", img : "./img/fruit/img_size_200.png", radius : 100},
-      {name : "ballTypeJ", img : "./img/fruit/img_size_220.png", radius : 110}
+      { name : "ballTypeA", img : "./img/fruit/img_size_30.png", radius : 15 },
+      { name : "ballTypeB", img : "./img/fruit/img_size_60.png", radius : 30 },
+      { name : "ballTypeC", img : "./img/fruit/img_size_80.png", radius : 40 },
+      { name : "ballTypeD", img : "./img/fruit/img_size_100.png", radius : 50 },
+      { name : "ballTypeE", img : "./img/fruit/img_size_120.png", radius : 60 },
+      { name : "ballTypeF", img : "./img/fruit/img_size_140.png", radius : 70 },
+      { name : "ballTypeG", img : "./img/fruit/img_size_160.png", radius : 80 },
+      { name : "ballTypeH", img : "./img/fruit/img_size_180.png", radius : 90 },
+      { name : "ballTypeI", img : "./img/fruit/img_size_200.png", radius : 100 },
+      { name : "ballTypeJ", img : "./img/fruit/img_size_220.png", radius : 110 }
     ]
-    this.canvas = document.getElementById("canvas");
-    this.canvas.style.zIndex = "2";
-    this.data = null;
-    this.imgTag = null;
+  this.canvas = document.getElementById("canvas");
+  this.canvas.style.zIndex = "2";
+  this.data = null;
+  this.imgTag = null;
   }
 
   // <=============================== ボールの生成 ===============================>
-  random(max){
+  random(max) {
     //ランダムにmaxの値までの整数を生成する
-    const fortune = []
+    const fortune = [];
     let num = 0;
-    for(let i = (max - 1);i > -1;i--){
-      for(let j = 0;j < i;j++){
+    for(let i = (max - 1); i > -1; i--) {
+      for(let j = 0;j < i;j++) {
         fortune.push(num);
       }
       num += 1;
@@ -43,35 +43,35 @@ class Ball{
     return random
   }
 
-  choice(){
+  choice() {
     //0~ボールの種類の数までの数をランダムに生成し、その数値のインデックスのボールを選択する
     return this.imgs[this.random(this.imgs.length)];
   }
 
-  set(){
+  set() {
     this.data = this.choice();
     //選択したボールを描画する
-    this.imgTag = document.createElement("img")
-    this.imgTag.setAttribute("src",this.data.img)
-    this.imgTag.setAttribute("id","ballImg")
-    this.imgTag.style.left = this.canvas.width / 2 + "px" ;
-    this.imgTag.style.top = 30 + "px" ;
+    this.imgTag = document.createElement("img");
+    this.imgTag.setAttribute("src", this.data.img);
+    this.imgTag.setAttribute("id", "ballImg");
+    this.imgTag.style.left = this.canvas.width / 2 + "px";
+    this.imgTag.style.top = 30 + "px";
     this.imgTag.style.position = "absolute";
     document.body.appendChild(this.imgTag);
   }
 
-  position(x){
+  position(x) {
     //描画したボールをxに追従させる
     this.imgTag.style.left = x - this.data.radius  + "px";
     this.imgTag.style.top = this.y + "px";
   }
 
-  hiddenImg(){
+  hiddenImg() {
     //描画しているボールを削除する
     this.imgTag.remove();
   }
 
-  create(x, y, data){
+  create(x, y, data) {
     //描画していたボールはimgだけのため、剛体のボールを生成する。（ゲームエンジンのライブラリ使っているため）
     this.image.src = data.img;
     const ball = this.bodies.circle(x, y + data.radius, data.radius, {
@@ -97,9 +97,9 @@ class Ball{
   }
 
   // <=============================== ボールの消去 ===============================>
-   removeBall(ball){
+  removeBall(ball) {
      //剛体のボールの消去
     this.matterWorld.remove(this.World, ball);
-   }
+  }
 }
 
