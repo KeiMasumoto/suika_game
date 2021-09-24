@@ -159,27 +159,33 @@ class Game {
   }
 
   removeGameOverBalls(ballList) {
+    let startTime = Date.now();
     let eleNum = 0;
     const game = this;
     game.screen.deleteBalls();
     if(game.collisionBool === "false") {
-      const removeAllBalls = setInterval(() => {
-        if(eleNum === ballList.length - 1){
-          clearInterval(removeAllBalls);
+      const removeAllBalls = () => {
+        const currentTime = Date.now();
+        console.log()
+        const id = requestAnimationFrame(removeAllBalls);
+        if(eleNum === ballList.length) {
+          cancelAnimationFrame(id);
           game.collisionBool = "true";
           game.screen.gameOver();
         };
-        for(let i = 0; i < game.ball.imgs.length; i++){
-          if(ballList[eleNum].circleRadius === game.ball.imgs[i].radius) {
-            game.AudioPlayer.playSound("union");
-            console.log((game.ball.imgs[i].radius * 2));
-            console.log(game.ball.imgs[i].name);
-            game.screen.visibleUnionEffect(ballList[eleNum].position.x, ballList[eleNum].position.y, (game.ball.imgs[i].radius * 2), game.ball.imgs[i].name);
-            this.ball.removeBall(ballList[eleNum]);
+        if(currentTime - startTime > 1000) {
+          for(let i = 0; i < game.ball.imgs.length; i++) {
+            if(ballList[eleNum].circleRadius === game.ball.imgs[i].radius) {
+              game.AudioPlayer.playSound("union");
+              game.screen.visibleUnionEffect(ballList[eleNum].position.x, ballList[eleNum].position.y, (game.ball.imgs[i].radius * 2), game.ball.imgs[i].name);
+              this.ball.removeBall(ballList[eleNum]);
+            }
           }
+          eleNum += 1;
+          startTime = Date.now();
         }
-        eleNum += 1;
-      }, 1000);
+      };
+      requestAnimationFrame(removeAllBalls);
     }
   }
      // <=============================== ボールの最高到達高さを算出 ===============================>
