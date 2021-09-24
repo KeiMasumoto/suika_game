@@ -12,6 +12,7 @@ class Game {
     this.World = this.Engine.world;
 
     this.canvas = document.getElementById("canvas");
+    this.gamewrapper = document.getElementById("gameWrapper")
     this.endingTextBtn = document.getElementById("ending-text-wrapper");
     this.endingImgBtn = document.getElementById("ending-img");
 
@@ -26,6 +27,7 @@ class Game {
     this.ball = new Ball(this.bodies, this.matterWorld, this.World);
     this.screen = new Screen();
     this.AudioPlayer = new AudioPlayer();
+    this.collisionBool = null;
   }
 
   //物理エンジンのレンダリング
@@ -36,8 +38,8 @@ class Game {
       engine: this.Engine,
       options: {
         wireframes: false,
-        width: innerWidth,
-        height: innerHeight,
+        width: 320,
+        height: 550,
         showAngleIndicator: false,
         background: "rgba(0, 0, 0 ,0)",
       },
@@ -45,30 +47,32 @@ class Game {
     return render
   }
 
-   //初期化
+  //初期化
   init() {
-    const ballList = this.World.bodies.filter(ball => ball.label === "Circle Body"); //全ボールの取得
-    this.removeBalls(ballList);//ボールリストから全ボールの削除
+    this.gamewrapper.appendChild(this.canvas);
     this.screen.init();//描画画面の初期化
     this.setBall = this.ball.set(this.data);//最初のボールの生成
   }
-    // <=============================== 衝突検知 ===============================>
+  // <=============================== 衝突検知 ===============================>
   collision() {
     const game = this;
-    //ゲームエンジンでのコリジョン判定。ゲーム内に剛体として生成したオブジェクトを対象として衝突判定をしてくれている。今回は床、壁、ボール。
+      //ゲームエンジンでのコリジョン判定。ゲーム内に剛体として生成したオブジェクトを対象として衝突判定をしてくれている。今回は床、壁、ボール。
     game.events.on(game.Engine, "collisionStart", function(event) {
-      if(event.pairs[0].bodyA.label === "Rectangle Body") {
-        game.AudioPlayer.playSound("bound");
-      }
-      else if(event.pairs[0].bodyB.label === "Rectangle Body") {
-        game.AudioPlayer.playSound("bound");
-      }
-      game.union(event);//同種のボールの合体
-      game.ballHeight = game.maxHeight();//全ボールからもっともy座標の位置が高いものを取得
+      if(game.collisionBool === "true"){
+        const ballList = game.World.bodies.filter(ball => ball.label === "Circle Body"); //全ボールの取得
+        if(event.pairs[0].bodyA.label === "Rectangle Body") {
+          game.AudioPlayer.playSound("bound");
+        }
+        else if(event.pairs[0].bodyB.label === "Rectangle Body") {
+          game.AudioPlayer.playSound("bound");
+        }
+        game.union(event);//同種のボールの合体
+        game.ballHeight = game.maxHeight();//全ボールからもっともy座標の位置が高いものを取得
+      };
     });
   }
 
-     // <=============================== ボール合体 ===============================>
+  // <=============================== ボール合体 ===============================>
   union(event) {
     const game = this;
     const pairs = event.pairs;
@@ -83,7 +87,7 @@ class Game {
           y -= game.ball.imgs[i+1].radius;
           game.screen.visibleUnionEffect(x, y, game.ball.imgs[i+1].radius * 2, game.ball.imgs[i].name);
           game.AudioPlayer.playSound("union");
-          game.ball.create(x, y, game.ball.imgs[i+1]);//衝突して合体したボールの半径より一つ大きいボールを生成
+          game.ball.create(x + ((innerWidth - this.canvas.width) / 2), y, game.ball.imgs[i+1]);//衝突して合体したボールの半径より一つ大きいボールを生成
           game.removeBalls(balls);//差し替える
           game.scorePoint = game.scorePoint + ballA.circleRadius;//衝突して合体したボールの半径をとりあえず得点としている
           game.screen.addScore(game.scorePoint);
@@ -98,14 +102,24 @@ class Game {
     const game = this;
 
     document.addEventListener("mousemove", (event) => {
-      const x = event.pageX;
+      let x = event.pageX;
+      const r = ball.data.radius;
+      if((((innerWidth - this.canvas.width) / 2) + r) > x) {
+        x = r;
+      }
+      else if((((innerWidth + this.canvas.width) / 2) - r) < x) {
+        x = (((innerWidth + this.canvas.width) / 2) - r) - ((innerWidth - this.canvas.width) / 2);
+      }
+      else{
+        x = event.pageX - ((innerWidth - this.canvas.width) / 2);
+      }
       ball.position(x);//装填したボールをマウスに追従させる
     });
 
     game.canvas.addEventListener("click", (event) => {
       const x = event.pageX;
       ball.hiddenImg();
-      ball.create(x,30,game.ball.data);
+      ball.create(x, 30, game.ball.data);
       game.canvas.style.pointerEvents = "none";//ボールを落としてから次のボールが生成されるまで、ボールを落下させないようにする。
 
       //タイマーでクリック可能にしつつ、次弾装填
@@ -118,7 +132,9 @@ class Game {
         const id = requestAnimationFrame(update); 
         if(diff > 2000) {
           if(game.ballHeight < game.gameOverHeight) {//ある高さを積み上げたボールが超えるとゲーム終了
-            game.screen.gameOver();
+            const ballList = this.World.bodies.filter(ball => ball.label === "Circle Body"); //全ボールの取得
+            game.collisionBool = "false";
+            game.removeGameOverBalls(ballList);
           }
           else if(game.ballHeight < (game.gameOverHeight + 100)) {//ステージがいっぱいになり、終了条件に近づいていることを警告する
             this.setBall = ball.set();
@@ -139,7 +155,32 @@ class Game {
      // <=============================== ステージ上のボール全削除 ===============================>
   removeBalls(ballList) {
     for(let i = 0; i < ballList.length; i++)
-    this.ball.removeBall(ballList[i]);
+      this.ball.removeBall(ballList[i]);
+  }
+
+  removeGameOverBalls(ballList) {
+    let eleNum = 0;
+    const game = this;
+    game.screen.deleteBalls();
+    if(game.collisionBool === "false") {
+      const removeAllBalls = setInterval(() => {
+        if(eleNum === ballList.length - 1){
+          clearInterval(removeAllBalls);
+          game.collisionBool = "true";
+          game.screen.gameOver();
+        };
+        for(let i = 0; i < game.ball.imgs.length; i++){
+          if(ballList[eleNum].circleRadius === game.ball.imgs[i].radius) {
+            game.AudioPlayer.playSound("union");
+            console.log((game.ball.imgs[i].radius * 2));
+            console.log(game.ball.imgs[i].name);
+            game.screen.visibleUnionEffect(ballList[eleNum].position.x, ballList[eleNum].position.y, (game.ball.imgs[i].radius * 2), game.ball.imgs[i].name);
+            this.ball.removeBall(ballList[eleNum]);
+          }
+        }
+        eleNum += 1;
+      }, 1000);
+    }
   }
      // <=============================== ボールの最高到達高さを算出 ===============================>
      //MaxHeight = ball.position.y + ball.radius
@@ -155,12 +196,13 @@ class Game {
     }
     const min = Math.min.apply(null, yList);//もっとも画面上部のy座標を取得
     const index = yList.indexOf(min);//もっとも画面上部にあるボールのインデックスを取得
-    const height = ballList[index].position.y - ballList[index].circleRadius;//座標リストのインデックスからどのボールが一番上かを特定して、ボールの最上部の高さを算出するå
+    const height = ballList[index].position.y - ballList[index].circleRadius;//座標リストのインデックスからどのボールが一番上かを特定して、ボールの最上部の高さを算出する
     return height;
   }
 
 
   run() {
+    this.collisionBool = "true";
     this.render.run(this.rendering());
     this.runner.run(this.Engine);
     this.wall.rightWall();

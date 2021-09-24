@@ -11,11 +11,12 @@
   <title>suika game</title>
 </head>
 <body>
-  <div class="game-wrapper">
+  <div class="delete-balls" id="delete-balls"></div>
+  <div class="game-wrapper" id="gameWrapper">
     <span class="score" id="score"></span>
     <div class="ending-wrapper" id="end">
+      <div class="ending-sheet"></div>
       <div class="ending">
-        <div class="ending-sheet"></div>
         <div class="ending-score-title">
           <img src="./img/ending/img_tresure.png" alt="" class="ending-score-title-img">
           <span class="ending-score-title-text">SCORE</span>
@@ -27,7 +28,7 @@
           <span class="ending-text">More Game</span>
         </div>
         <div id="ending-img" class="ending-img">
-          <img src="./img/ending/img_replay.png" alt="">
+          <img src="./img/ending/img_replay.png" alt="" class="replay">
         </div>
       </div>
     </div>

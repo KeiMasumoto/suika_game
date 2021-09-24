@@ -46,18 +46,18 @@ class RigidBody{
 class Wall extends RigidBody {
     // <=============================== 壁作成 ===============================>
   rightWall() {
-    this.create(-10, this.height / 2, 20, this.height);
+    this.create(-10, this.canvas.height / 2, 20, this.canvas.height);
   }
 
   leftWall() {
-    this.create(this.width + 10, this.height / 2, 20, this.height);
+    this.create(this.canvas.width + 10, this.canvas.height / 2, 20, this.canvas.height);
   }
 }
 
 class Floor extends RigidBody {
   // <=============================== 床作成 ===============================>
   floor() {
-    this.createYellowGround(this.width / 2, this.height-10, this.width, 90);
-    this.create(this.width / 2, this.height-10, this.width, 70);
+    this.createYellowGround(this.canvas.width / 2, this.canvas.height-10, this.canvas.width, 90);
+    this.create(this.canvas.width / 2, this.canvas.height-10, this.canvas.width, 70);
   }
 }

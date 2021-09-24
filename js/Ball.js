@@ -19,6 +19,7 @@ class Ball {
       { name : "ballTypeJ", img : "./img/fruit/img_size_220.png", radius : 110 }
     ]
   this.canvas = document.getElementById("canvas");
+  this.gameWrapper = document.getElementById("gameWrapper");
   this.canvas.style.zIndex = "2";
   this.data = null;
   this.imgTag = null;
@@ -52,10 +53,10 @@ class Ball {
     this.imgTag = document.createElement("img");
     this.imgTag.setAttribute("src", this.data.img);
     this.imgTag.setAttribute("id", "ballImg");
-    this.imgTag.style.left = this.canvas.width / 2 + "px";
+    this.imgTag.style.left = (this.canvas.width / 2) - (this.data.radius)  + "px";
     this.imgTag.style.top = 30 + "px";
     this.imgTag.style.position = "absolute";
-    document.body.appendChild(this.imgTag);
+    this.gameWrapper.appendChild(this.imgTag);
   }
 
   position(x) {
@@ -71,8 +72,8 @@ class Ball {
 
   create(x, y, data) {
     //描画していたボールはimgだけのため、剛体のボールを生成する。（ゲームエンジンのライブラリ使っているため）
-    this.image.src = data.img;
-    const ball = this.bodies.circle(x, y + data.radius, data.radius, {
+    // this.image.src = data.img;
+    const ball = this.bodies.circle(x - ((innerWidth - this.canvas.width) / 2), y + data.radius, data.radius, {
       //ボールを追加
       density: 0.01, // 密度: 単位面積あたりの質量
       frictionAir: 0.05, // 空気抵抗(空気摩擦)
@@ -84,7 +85,7 @@ class Ball {
           //スプライトの設定
           texture: data.img, //スプライトに使うテクスチャ画像を指定
           xScale: 1,
-          yScale: 1
+          yScale: 1,
         },
       },
       timeScale: 1.5, //時間の倍率を設定(1で1倍速)
@@ -98,6 +99,35 @@ class Ball {
   removeBall(ball) {
      //剛体のボールの消去
     this.matterWorld.remove(this.World, ball);
+
+    let radius = ball.circleRadius - (ball.circleRadius / 15);
+    const fadeOut = setInterval(() => {
+      const fadeOutBall = this.bodies.circle(ball.position.x, ball.position.y + radius, radius, {
+        //ボールを追加
+        density: 0.01, // 密度: 単位面積あたりの質量
+        frictionAir: 0.05, // 空気抵抗(空気摩擦)
+        restitution: 0.6, // 弾力性
+        friction: 0.05, // 本体の摩擦
+        render: {
+          //ボールのレンダリングの設定
+          sprite: {
+            //スプライトの設定
+            texture: ball.render.sprite.texture, //スプライトに使うテクスチャ画像を指定
+            xScale: radius / ball.circleRadius,
+            yScale: radius / ball.circleRadius,
+          },
+        },
+        timeScale: 1.5, //時間の倍率を設定(1で1倍速)
+      });
+      radius = radius - (ball.circleRadius / 15);
+      this.matterWorld.add(this.World, fadeOutBall);
+      setTimeout(() => {
+        this.matterWorld.remove(this.World, fadeOutBall);
+      }, 10)
+      if(radius <= 0){
+        clearInterval(fadeOut);
+      };
+    }, 10);
   }
 }
 
