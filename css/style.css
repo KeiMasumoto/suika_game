@@ -92,8 +92,19 @@ canvas {
   justify-content: center;
 }
 
-.ending-text-wrapper, .ending-img {
+.ending-text-wrapper, .ending-img, .start-text {
   cursor: pointer;
+}
+
+.start-text-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .ending-score-title-text, .ending-score-title-img {
@@ -130,18 +141,22 @@ canvas {
               -1px 0 0 brown, 1px 0 0 brown;
 }
 
-.ending-text-wrapper {
+.ending-text-wrapper, .start-text {
   border:solid 3px yellow;
   color: yellow;
   border-radius: 40px;
   padding: 1rem  4rem;
 }
 
-.ending-score-title-img {
+.start-text{
+  background-color: burlywood;
+}
+
+.replay, .ending-score-title-img {
   width: 80%;
 }
 
-.ending-text {
+.ending-text, .start-text {
   font-size: 18px;
   font-weight: 900;
 }

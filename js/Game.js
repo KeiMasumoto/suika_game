@@ -12,6 +12,8 @@ class Game {
     this.World = this.Engine.world;
 
     this.canvas = document.getElementById("canvas");
+    this.startWrapper = document.getElementById("start-text-wrapper");
+    this.start = document.getElementById("start-text");
     this.gamewrapper = document.getElementById("gameWrapper")
     this.endingTextBtn = document.getElementById("ending-text-wrapper");
     this.endingImgBtn = document.getElementById("ending-img");
@@ -26,7 +28,7 @@ class Game {
     this.floor = new Floor(this.bodies, this.matterWorld, this.composite, this.World);
     this.ball = new Ball(this.bodies, this.matterWorld, this.World);
     this.screen = new Screen();
-    this.AudioPlayer = new AudioPlayer();
+    this.AudioPlayer = null;
     this.collisionBool = null;
   }
 
@@ -118,8 +120,8 @@ class Game {
 
     game.canvas.addEventListener("click", (event) => {
       const x = event.pageX;
-      ball.hiddenImg();
       ball.create(x, 30, game.ball.data);
+      ball.hiddenImg();
       game.canvas.style.pointerEvents = "none";//ボールを落としてから次のボールが生成されるまで、ボールを落下させないようにする。
 
       //タイマーでクリック可能にしつつ、次弾装填
@@ -208,6 +210,12 @@ class Game {
 
 
   run() {
+    this.start.addEventListener("touchend", () => {
+      this.start.style.display = "none";
+      this.startWrapper.style.display = "none";
+      this.AudioPlayer = new AudioPlayer();
+      this.AudioPlayer.playFirstSound("union");
+    });
     this.collisionBool = "true";
     this.render.run(this.rendering());
     this.runner.run(this.Engine);

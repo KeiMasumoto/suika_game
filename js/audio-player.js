@@ -8,6 +8,31 @@ class AudioPlayer {
     window.AudioContext = window.AudioContext || window.webkitAudioContext; //互換対応
   }
 
+  playFirstSound(name){//音の再生が単発の再生
+    let dir = null;
+    let request = null;
+    for(let i = 0; i < this.data.length; i++) {
+      if(this.data[i].name === name) {
+        dir = this.data[i].dir;
+      }
+    }
+    let src = null;
+    const audioPlayer = this;
+    request = new XMLHttpRequest();
+    request.open("GET", dir, true);
+    request.responseType = "arraybuffer";
+    request.onload = completeOnLoad;
+    request.send();
+    function completeOnLoad() {
+      audioPlayer.audioContext.decodeAudioData(request.response, function (buf) {
+        src.buffer = buf;
+        src.connect(audioPlayer.audioContext.destination);
+        src.start(0);
+      });
+    }
+    src = audioPlayer.audioContext.createBufferSource();
+  };
+
   playSound(name) {//音の再生が単発の再生
     let dir = null;
     for(let i = 0; i < this.data.length; i++) {
