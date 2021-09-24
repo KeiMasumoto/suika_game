@@ -8,7 +8,7 @@ class AudioPlayer {
     window.AudioContext = window.AudioContext || window.webkitAudioContext; //互換対応
   }
 
-  playFirstSound(name){//音の再生が単発の再生
+  playFirstSound(name) {//同期にしてスマホでの再生をイベントで許可するため用の再生
     let dir = null;
     let request = null;
     for(let i = 0; i < this.data.length; i++) {
