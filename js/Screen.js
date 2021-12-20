@@ -12,34 +12,61 @@ class Screen {
     this.tags = [];
   }
 
+  showElemnet(ele) {
+    ele.classList.add("is-show");
+    ele.classList.remove("is-hidden");
+  }
+  hiddenElement(ele) {
+    ele.classList.add("is-hidden");
+    ele.classList.remove("is-show");
+  }
+  pointerEventsOn(ele) {
+    ele.classList.add("pointer-events-on");
+    ele.classList.remove("pointer-events-off");
+  }
+  pointerEventsOff(ele) {
+    ele.classList.remove("pointer-events-on");
+    ele.classList.add("pointer-events-off");
+  }
+
   //ゲーム終了画面
   deleteBalls() {
-    this.delete.style.display = "block"
-    this.canvas.style.pointerEvents = "none"
+    // this.delete.style.display = "block"
+    // this.canvas.style.pointerEvents = "none"
+    this.showElemnet(this.delete);
+    this.pointerEventsOff(this.canvas);
   }
 
   gameOver() {
-    this.delete.style.display = "none"
-    this.ending.style.display = "block";//エンディングの表示
+    // this.delete.style.display = "none"
+    // this.ending.style.display = "block";//エンディングの表示
+    this.showElemnet(this.ending);
+    this.hiddenElement(this.delete);
   }
 
   //タイトル画面
   init() {
-    this.canvas.style.pointerEvents = "auto"
-    this.delete.style.display = "none"
-    this.ending.style.display = "none";//エンディングの非表示
+    // this.canvas.style.pointerEvents = "auto"
+    // this.delete.style.display = "none"
+    // this.ending.style.display = "none";//エンディングの非表示
+    this.pointerEventsOn(this.canvas);
+    this.hiddenElement(this.delete);
+    this.hiddenElement(this.ending);
     this.hiddenBar();//警告の非表示
     this.score.innerText = 0;//得点の初期化
+
   }
-  
+
   //プレイ中の画面
   visibleBar(top) {
-    this.caution.style.display = "block";//ゲームの終了条件に近いことを警告
+    // this.caution.style.display = "block";//ゲームの終了条件に近いことを警告
+    this.showElemnet(this.caution);
     this.caution.style.top = top + "px";
   }
 
   hiddenBar() {
-    this.caution.style.display = "";//ゲームの終了条件に近く無い
+    this.hiddenElement(this.caution);
+    // this.caution.style.display = "";//ゲームの終了条件に近く無い
   }
 
   visibleUnionEffect(x, y, size, type) {
@@ -77,9 +104,8 @@ class Screen {
     const update = () => {
       time = Date.now();
       diff = time - oldTime;
-      const id = requestAnimationFrame(update); 
-      if(diff > 500){
-        console.log("del");
+      const id = requestAnimationFrame(update);
+      if (diff > 1000) {
         cancelAnimationFrame(id);
         screen.removeUnionEffect();
       }

@@ -6,6 +6,10 @@ html {
   height: 100%;
 }
 
+*:focus {
+  outline: none;
+}
+
 body {
   left: 0;
   top: 0;
@@ -15,6 +19,7 @@ body {
   position: relative;
   background-color: black;
   overflow: hidden;
+  user-select: none;
 }
 
 canvas {
@@ -23,6 +28,20 @@ canvas {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+.is-show {
+  display: block;
+}
+.is-hidden {
+  display: none;
+}
+
+.pointer-events-on {
+  pointer-events: auto;
+}
+.pointer-events-off {
+  pointer-events: none;
 }
 
 .game-wrapper {
@@ -53,7 +72,6 @@ canvas {
   left: 0;
   top: 0;
   z-index: 10;
-  display: none;
 }
 
 .ending {
@@ -72,15 +90,18 @@ canvas {
   z-index: 20;
 }
 
-.ending-sheet, .delete-balls {
+.ending-sheet,
+.delete-balls {
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: black;
-  opacity: .5;
+  opacity: 0.5;
 }
 
-.ending-score-title, .ending-text-wrapper, .ending-img {
+.ending-score-title,
+.ending-text-wrapper,
+.ending-img {
   margin: 2rem 0 0 0;
   z-index: 11;
 }
@@ -90,9 +111,12 @@ canvas {
   flex-direction: column;
   width: 50%;
   justify-content: center;
+  align-items: center;
 }
 
-.ending-text-wrapper, .ending-img, .start-text {
+.ending-text-wrapper,
+.ending-img,
+.start-text {
   cursor: pointer;
 }
 
@@ -107,7 +131,8 @@ canvas {
   align-items: center;
 }
 
-.ending-score-title-text, .ending-score-title-img {
+.ending-score-title-text,
+.ending-score-title-img {
   margin: 0 1rem;
 }
 
@@ -133,30 +158,33 @@ canvas {
   font-size: 36px;
 }
 
-.score, .ending-score-text {
-  font-family: 'Gloria Hallelujah', cursive;
-  text-shadow:1px 1px 0 brown, -1px -1px 0 brown,
-              -1px 1px 0 brown, 1px -1px 0 brown,
-              0px 1px 0 brown,  0 -1px 0 brown,
-              -1px 0 0 brown, 1px 0 0 brown;
+.score,
+.ending-score-text {
+  font-family: "Gloria Hallelujah", cursive;
+  text-shadow: 1px 1px 0 brown, -1px -1px 0 brown, -1px 1px 0 brown,
+    1px -1px 0 brown, 0px 1px 0 brown, 0 -1px 0 brown, -1px 0 0 brown,
+    1px 0 0 brown;
 }
 
-.ending-text-wrapper, .start-text {
-  border:solid 3px yellow;
+.ending-text-wrapper,
+.start-text {
+  border: solid 3px yellow;
   color: yellow;
   border-radius: 40px;
-  padding: 1rem  4rem;
+  padding: 1rem 4rem;
 }
 
-.start-text{
+.start-text {
   background-color: burlywood;
 }
 
-.replay, .ending-score-title-img {
+.replay,
+.ending-score-title-img {
   width: 80%;
 }
 
-.ending-text, .start-text {
+.ending-text,
+.start-text {
   font-size: 18px;
   font-weight: 900;
 }
@@ -165,11 +193,12 @@ canvas {
   position: absolute;
   width: 100%;
   animation: flash 1s linear infinite;
-  display: none;
+  /* display: none; */
 }
 
 @keyframes flash {
-  0%,100% {
+  0%,
+  100% {
     opacity: 1;
   }
 
@@ -262,38 +291,37 @@ canvas {
   }
 }
 
-.union-effect0 {
-  position: absolute;
-  z-index: 15;
-  animation: union0 .6s;
-}
-
-.union-effect1 {
-  position: absolute;
-  z-index: 15;
-  animation: union1 .6s;
-}
-
-.union-effect2 {
-  position: absolute;
-  z-index: 15;
-  animation: union2 .6s;
-}
-
-.union-effect3 {
-  position: absolute;
-  z-index: 15;
-  animation: union3 .6s;
-}
-
-.union-effect4 {
-  position: absolute;
-  z-index: 15;
-  animation: union4 .6s;
-}
-
+.union-effect0,
+.union-effect1,
+.union-effect2,
+.union-effect3,
+.union-effect4,
 .union-effect5 {
   position: absolute;
   z-index: 15;
-  animation: union5 .6s;
+  animation-duration: 1s;
+}
+
+.union-effect0 {
+  animation-name: union0;
+}
+
+.union-effect1 {
+  animation-name: union1;
+}
+
+.union-effect2 {
+  animation-name: union2;
+}
+
+.union-effect3 {
+  animation-name: union3;
+}
+
+.union-effect4 {
+  animation-name: union4;
+}
+
+.union-effect5 {
+  animation-name: union5;
 }
