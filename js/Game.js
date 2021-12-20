@@ -289,7 +289,7 @@ class Game {
           game.collisionBool = true;
           game.screen.gameOver();
         };
-        if(currentTime - startTime > 500) {
+        if(currentTime - startTime > 250) {
           for(let i = 0; i < game.ball.imgs.length; i++) {
             if(ballList[eleNum].circleRadius === game.ball.imgs[i].radius) {
               game.AudioPlayer.playSound("union");
