@@ -2,37 +2,48 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>suika game</title>
 </head>
 <body>
-  <span class="score" id="score"></span>
-  <div class="ending-wrapper" id="end">
-    <div class="ending">
+  <div class="removing-ball-View" id="removingBallView"></div>
+  <div class="game-wrapper" id="gameWrapper">
+    <div id="start-text-wrapper" class="start-text-wrapper">
+      <span id="start-text" class="start-text">Start Game</span>
+    </div>
+    <span class="score" id="score"></span>
+    <div class="ending-wrapper" id="endView">
       <div class="ending-sheet"></div>
-      <div class="ending-score-title">
-        <img src="./img/ending/img_tresure.png" alt="" class="ending-score-title-img">
-        <span class="ending-score-title-text">SCORE</span>
-      </div>
-      <div class="ending-score">
-        <span class="ending-score-text" id="ending-score-text">0</span>
-      </div>
-      <div id="ending-text-wrapper" class="ending-text-wrapper">
-        <span class="ending-text">Moer Game</span>
-      </div>
-      <div id="ending-img" class="ending-img">
-        <img src="./img/ending/img_replay.png" alt="">
+      <div class="ending">
+        <div class="ending-score-title">
+          <img src="./img/ending/img_tresure.png" alt="" class="ending-score-title-img">
+          <span class="ending-score-title-text">SCORE</span>
+        </div>
+        <div class="ending-score">
+          <span class="ending-score-text" id="ending-score-text">0</span>
+        </div>
+        <div id="ending-text-wrapper" class="ending-text-wrapper">
+          <span class="ending-text">More Game</span>
+        </div>
+        <div id="ending-img" class="ending-img">
+          <img src="./img/ending/img_replay.png" alt="" class="replay">
+        </div>
       </div>
     </div>
+    <img src="./img/playing/img_boader.png" alt="" class="caution-bar" id="cautionBar">
+    <canvas id="canvas"></canvas>
   </div>
-  <img src="./img/playing/img_boader.png" alt="" class="caution" id="caution">
-  <canvas id="canvas"></canvas>
-  <script type="text/javascript" src="./js/matter.min.js" ></script>
-  <script type="text/javascript" src="./js/Ball.js" ></script>
-  <script type="text/javascript" src="./js/RigidBody.js" ></script>
-  <script type="text/javascript" src="./js/Screen.js" ></script>
-  <script type="text/javascript" src="./js/Game.js" id = "script"></script>
+  <!-- <script type="text/javascript" src="./js/matter.min.js" ></script> -->
+  <script type="text/javascript" src="./js/matter.js" ></script>
+  <script type="text/javascript" src="./js/audio-player.js" ></script>
+  <script type="text/javascript" src="./js/ball.js" ></script>
+  <script type="text/javascript" src="./js/rigid-body.js" ></script>
+  <script type="text/javascript" src="./js/screen.js" ></script>
+  <script type="text/javascript" src="./js/game.js" id = "script"></script>
 </body>
 </html>
