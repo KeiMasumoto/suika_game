@@ -1,15 +1,16 @@
 'use strict';
 class Screen {
-  constructor() {
+  constructor(forCanvashighResolution) {
     this.canvas = document.getElementById("canvas");
-    this.delete = document.getElementById("delete-balls");
-    this.ending = document.getElementById("end");
-    this.caution = document.getElementById("caution");
+    this.removingBallView = document.getElementById("removingBallView");
+    this.endView = document.getElementById("endView");
+    this.cautionBar = document.getElementById("cautionBar");
     this.score = document.getElementById("score");
     this.sumScore = document.getElementById("ending-score-text");
     this.width = innerWidth;
     this.height = innerHeight;
     this.tags = [];
+    this.forCanvashighResolution = forCanvashighResolution;
   }
 
   showElemnet(ele) {
@@ -29,47 +30,39 @@ class Screen {
     ele.classList.add("pointer-events-off");
   }
 
-  //ゲーム終了画面
-  deleteBalls() {
-    // this.delete.style.display = "block"
-    // this.canvas.style.pointerEvents = "none"
-    this.showElemnet(this.delete);
-    this.pointerEventsOff(this.canvas);
+  // ゲーム終了画面
+  showRemovingBallView() {
+    this.showElemnet(this.removingBallView); // ゲーム終了時にボールが順々に削除されていく際に、薄い黒いシートを描画して終わり感を演出する
+    this.pointerEventsOff(this.canvas); // キャンバスのクリックを禁止し、ボールの生成をここで阻害する
   }
 
-  gameOver() {
-    // this.delete.style.display = "none"
-    // this.ending.style.display = "block";//エンディングの表示
-    this.showElemnet(this.ending);
-    this.hiddenElement(this.delete);
+  showGameOverView() {
+    this.showElemnet(this.endView); // ゲーム終了時の得点とコンテニュー画面を表示する
+    this.hiddenElement(this.removingBallView);
   }
 
-  //タイトル画面
+  // タイトル画面
   init() {
-    // this.canvas.style.pointerEvents = "auto"
-    // this.delete.style.display = "none"
-    // this.ending.style.display = "none";//エンディングの非表示
     this.pointerEventsOn(this.canvas);
-    this.hiddenElement(this.delete);
-    this.hiddenElement(this.ending);
-    this.hiddenBar();//警告の非表示
-    this.score.innerText = 0;//得点の初期化
+    this.hiddenElement(this.removingBallView); // ゲーム終了時の画面を非表示
+    this.hiddenElement(this.endView); // ゲーム終了時の画面を非表示
+    this.hiddenBar(); // 警告の非表示
+    this.score.innerText = 0; // 得点の初期化
 
   }
 
-  //プレイ中の画面
-  visibleBar(top) {
-    // this.caution.style.display = "block";//ゲームの終了条件に近いことを警告
-    this.showElemnet(this.caution);
-    this.caution.style.top = top + "px";
+  // プレイ中の画面
+  showBar(top) {
+    this.showElemnet(this.cautionBar); // 警告のバーを表示する
+    this.cautionBar.style.top = top + "px";
   }
 
   hiddenBar() {
-    this.hiddenElement(this.caution);
-    // this.caution.style.display = "";//ゲームの終了条件に近く無い
+    this.hiddenElement(this.cautionBar); // 警告のバーを非表示する
   }
 
-  visibleUnionEffect(x, y, size, type) {
+  showUnionEffect(x, y, size, type) {
+    // ボールが削除された際の飛沫を画像として格納する
     const imgs = [
       { name : "ballTypeA", 0 : "../img/fruit/purple/img_p1.png", 1 : "../img/fruit/purple/img_p2.png", 2 : "../img/fruit/purple/img_p3.png", 3 : "../img/fruit/purple/img_p4.png", 4 : "../img/fruit/purple/img_p5.png", 5 : "../img/fruit/purple/img_p6.png" },
       { name : "ballTypeB", 0 : "../img/fruit/red/img_r1.png", 1 : "../img/fruit/red/img_r2.png", 2 : "../img/fruit/red/img_r3.png", 3 : "../img/fruit/red/img_r4.png", 4 : "../img/fruit/red/img_r5.png", 5 : "../img/fruit/red/img_r6.png" },
@@ -82,16 +75,17 @@ class Screen {
       { name : "ballTypeI", 0 : "../img/fruit/white/img_w1.png", 1 : "../img/fruit/white/img_w2.png", 2 : "../img/fruit/white/img_w3.png", 3 : "../img/fruit/white/img_w4.png", 4 : "../img/fruit/white/img_w5.png", 5 : "../img/fruit/white/img_w6.png" },
       { name : "ballTypeJ", 0 : "../img/fruit/red/img_r1.png", 1 : "../img/fruit/red/img_r2.png", 2 : "../img/fruit/red/img_r3.png", 3 : "../img/fruit/red/img_r4.png", 4 : "../img/fruit/red/img_r5.png", 5 : "../img/fruit/red/img_r6.png" },
     ];
-    for(let i = 0; i < imgs.length; i++) {
-      if(imgs[i].name === type) {
-        for(let j = 0; j < 6; j++) {
+    // 画像として格納した画像を描画する
+    for (let i = 0; i < imgs.length; i++) {
+      if (imgs[i].name === type) {
+        for (let j = 0; j < 6; j++) {
           const imgTag = document.createElement("img");
           imgTag.setAttribute("class", "union-effect" + j);
           imgTag.setAttribute("src", imgs[i][j]);
           imgTag.width = size;
           imgTag.height = size;
-          imgTag.style.left = x - (imgTag.width / 2) + ((innerWidth - this.canvas.width) / 2) + "px" ;
-          imgTag.style.top = y - (imgTag.height / 2) + ((innerHeight - this.canvas.height) / 2) + "px" ;
+          imgTag.style.left = x - (imgTag.width / 2) + ((innerWidth - (this.canvas.width / this.forCanvashighResolution)) / 2) + "px" ;
+          imgTag.style.top = y - (imgTag.height / 2) + ((innerHeight - (this.canvas.height / this.forCanvashighResolution)) / 2) + "px" ;
           document.body.appendChild(imgTag);
           this.tags.push(imgTag);
         }
@@ -101,30 +95,33 @@ class Screen {
     const oldTime = Date.now();
     let time = null;
     let diff = null;
+
+    // 飛沫のimgを描画時間に合わせて削除する
     const update = () => {
       time = Date.now();
       diff = time - oldTime;
       const id = requestAnimationFrame(update);
       if (diff > 1000) {
         cancelAnimationFrame(id);
-        screen.removeUnionEffect();
+        screen.hiddenUnionEffect();
       }
     };
     requestAnimationFrame(update);
   }
 
-  removeUnionEffect() {
-    if(this.tags.length !== null) {
-      for(let i = 0; i < this.tags.length; i++) {
+  hiddenUnionEffect() {
+    // 飛沫のimgを削除する
+    if (this.tags.length !== null) {
+      for (let i = 0; i < this.tags.length; i++) {
         this.tags[i].remove();
       }
       this.tags = [];
     }
   }
 
- //スコアを描画
+ // スコアを描画
   addScore(point) {
-    this.score.innerText = point;//得点のテキスト挿入
-    this.sumScore.innerText = point;//エンディング画面での得点のテキスト挿入
+    this.score.innerText = point; // 得点のテキスト挿入
+    this.sumScore.innerText = point; // エンディング画面での得点のテキスト挿入
   }
 }

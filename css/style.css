@@ -23,6 +23,8 @@ body {
 }
 
 canvas {
+  width: 320px;
+  height: 550px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -85,13 +87,12 @@ canvas {
   margin: auto;
 }
 
-.delete-balls {
-  display: none;
+.removing-ball-View {
   z-index: 20;
 }
 
 .ending-sheet,
-.delete-balls {
+.removing-ball-View {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -189,7 +190,7 @@ canvas {
   font-weight: 900;
 }
 
-.caution {
+.caution-bar {
   position: absolute;
   width: 100%;
   animation: flash 1s linear infinite;

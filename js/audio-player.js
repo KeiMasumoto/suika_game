@@ -5,14 +5,14 @@ class AudioPlayer {
     const union = new Audio("union", "../audio/union.mp3");
     this.data = [bound.data, union.data]
     this.audioContext = new AudioContext();
-    window.AudioContext = window.AudioContext || window.webkitAudioContext; //互換対応
+    window.AudioContext = window.AudioContext || window.webkitAudioContext; // 互換対応
   }
 
-  playFirstSound(name) {//同期にしてスマホでの再生をイベントで許可するため用の再生
+  playFirstSound(name) { // 同期にしてスマホでの再生をイベントで許可するため用の再生
     let dir = null;
     let request = null;
-    for(let i = 0; i < this.data.length; i++) {
-      if(this.data[i].name === name) {
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i].name === name) {
         dir = this.data[i].dir;
       }
     }
@@ -33,10 +33,10 @@ class AudioPlayer {
     src = audioPlayer.audioContext.createBufferSource();
   };
 
-  playSound(name) {//音の再生が単発の再生
+  playSound(name) { // 音の再生が単発の再生
     let dir = null;
-    for(let i = 0; i < this.data.length; i++) {
-      if(this.data[i].name === name) {
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i].name === name) {
         dir = this.data[i].dir;
       }
     }
@@ -53,10 +53,10 @@ class AudioPlayer {
     })
   };
 
-  playBgm(name) {//音の再生がループする再生
+  playBgm(name) { // 音の再生がループする再生
     let dir = null;
-    for(let i = 0; i < this.data.length; i++) {
-      if(this.data[i].name === name) {
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i].name === name) {
         dir = this.data[i].dir;
       }
     }
@@ -75,7 +75,7 @@ class AudioPlayer {
   };
 }
 
-class Audio{
+class Audio {
   constructor(name, dir) {
     this.name = name;
     this.dir = dir;
