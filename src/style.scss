@@ -1,0 +1,265 @@
+@use "sass:list";
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap");
+
+.score-font {
+  font-family: "Gloria Hallelujah", cursive;
+  text-shadow: 1px 1px 0 brown, -1px -1px 0 brown, -1px 1px 0 brown,
+    1px -1px 0 brown, 0px 1px 0 brown, 0 -1px 0 brown, -1px 0 0 brown,
+    1px 0 0 brown;
+}
+
+.select-view-font {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.select-view {
+  border: solid 3px yellow;
+  color: yellow;
+  border-radius: 40px;
+  padding: 1rem 4rem;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+html {
+  left: 0;
+  top: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+
+  body {
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: black;
+    overflow: hidden;
+    position: fixed;
+    user-select: none;
+
+    .removing-ball-View {
+      z-index: 20;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      opacity: 0.5;
+    }
+
+    .game-wrapper {
+      position: absolute;
+      width: 320px;
+      height: 550px;
+      background-color: palegoldenrod;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+
+      .start-text-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 30;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .start-text {
+          background-color: burlywood;
+          cursor: pointer;
+          @extend .select-view-font;
+          @extend .select-view;
+        }
+      }
+
+      .score {
+        position: absolute;
+        font-size: 24px;
+        top: 0.4rem;
+        left: 01rem;
+        z-index: 12;
+        color: yellow;
+        letter-spacing: 0.5rem;
+        @extend .score-font;
+      }
+
+      .ending-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        z-index: 10;
+
+        .ending-sheet {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background-color: black;
+          opacity: 0.5;
+        }
+
+        .ending {
+          position: relative;
+          width: 80%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin: auto;
+
+          .ending-score-title,
+          .ending-text-wrapper,
+          .ending-img {
+            margin: 2rem 0 0 0;
+            z-index: 11;
+          }
+
+          .ending-score-title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .ending-score-title-text,
+            .ending-score-title-img {
+              margin: 0 1rem;
+            }
+
+            .ending-score-title-img {
+              width: 80%;
+            }
+
+            .ending-score-title-text {
+              font-size: 28px;
+              color: red;
+              letter-spacing: 0.4rem;
+              font-weight: 600;
+            }
+          }
+
+          .ending-score {
+            z-index: 11;
+          }
+
+          .ending-text-wrapper {
+            cursor: pointer;
+            @extend .select-view;
+
+            .ending-score-text {
+              color: red;
+              font-size: 36px;
+              @extend .score-font;
+            }
+
+            .ending-text {
+              @extend .select-view-font;
+            }
+          }
+          .ending-img {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            justify-content: center;
+            align-items: center;
+
+            .replay {
+              width: 80%;
+            }
+          }
+        }
+      }
+
+      .caution-bar {
+        position: absolute;
+        width: 100%;
+        animation: flash 1s linear infinite;
+      }
+
+      canvas {
+        width: 320px;
+        height: 550px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
+
+*:focus {
+  outline: none;
+}
+
+.is-show {
+  display: block;
+}
+.is-hidden {
+  display: none;
+}
+
+.pointer-events-on {
+  pointer-events: auto;
+}
+.pointer-events-off {
+  pointer-events: none;
+}
+
+@mixin animationParms1 {
+  opacity: 0;
+  transform: scale(0, 0) translate(0, 0);
+}
+
+@mixin animationParms2 {
+  opacity: 1;
+}
+
+@mixin animationParms3($translateX, $translateY) {
+  opacity: 0;
+  transform: scale(1, 1) translate($translateX, $translateY);
+}
+
+$translateParams: (0, 75%) (75%, 0) (75%, 75%) (0, -75%) (-75%, 0) (-75%, -75%);
+
+@for $i from 1 through 6 {
+  @keyframes union#{$i} {
+    0% {
+      @include animationParms1;
+    }
+    25% {
+      @include animationParms2;
+    }
+    100% {
+      @include animationParms3(
+        nth(nth($translateParams, $i), 1),
+        nth(nth($translateParams, $i), 2)
+      );
+    }
+  }
+
+  .union-effect#{$i} {
+    // 文字列として$iを使う場合（注:1）は「$i」ではなく「#{$i}」にする
+    position: absolute;
+    z-index: 15;
+    animation-duration: 1s;
+    animation-name: union#{$i};
+  }
+}
