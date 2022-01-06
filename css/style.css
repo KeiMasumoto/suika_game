@@ -19,6 +19,7 @@ body {
   position: relative;
   background-color: black;
   overflow: hidden;
+  position: fixed;
   user-select: none;
 }
 

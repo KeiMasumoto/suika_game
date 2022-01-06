@@ -312,68 +312,15 @@ class Game {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const game = new Game();
-  game.run();
-});
-
 const touchEventController = () => {
   document.documentElement.addEventListener('touchstart', function (e) {
     // Disable Pinch in/out zoom
     if (e.touches.length >= 2) { e.preventDefault(); }
   }, {passive: false});
-
-  gameView.addEventListener('touchstart', function (e) {
-    // Clear touch
-    touchStartX = e.touches[0].pageX;
-    touchStartY = e.touches[0].pageY;
-    swipedir = 'none'
-    startTime = new Date().getTime() // record time when finger first makes contact with surface
-  }, {passive: false});
-
-  // // Disable double touch zoom
-  let t = 0;
-  document.addEventListener('touchend', function (e) {
-    var now = new Date().getTime();
-    if (e.target.id === 'gameView') {
-      // Do not detect as double tap
-    } else if ((now - t) < 350) {
-      e.preventDefault(); 
-    }
-    t = now;
-  });
-
-  gameView.addEventListener('touchend', function (e) {
-    var now = new Date().getTime();
-    let distX = touchEndX - touchStartX;
-    let distY = touchEndY - touchStartY;
-    elapsedTime = now - startTime // get time elapsed
-    // elapsedTimeはタッチスタートからタッチエンドまでの時間
-    // allowedTimeで長すぎるタッチを排除している
-    if (elapsedTime <= allowedTime) { // first condition for swipe met
-
-      // distが大きい軸方向に対してフリック判定を与える
-      if (Math.abs(distX) >= threshold && Math.abs(distY) <= Math.abs(distX)) { // 2nd condition for horizontal swipe met
-          swipedir = (distX < 0) ? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
-      } else if (Math.abs(distY) >= threshold && Math.abs(distX) <= Math.abs(distY)) { // 2nd condition for vertical swipe met
-          swipedir = (distY < 0) ? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
-      }
-
-      if (swipedir === 'up') {
-          document.dispatchEvent(swipeUp);
-      } else if (swipedir === 'down') {
-          document.dispatchEvent(swipeDown);
-      } else if (swipedir === 'left') {
-          document.dispatchEvent(swipeLeft);
-      } else if (swipedir === 'right') {
-          document.dispatchEvent(swipeRight);
-      }
-    }
-  }, false);
-
-  // Prevent scroll
-  gameView.addEventListener('touchmove', function(e) {
-    touchEndX = e.touches[0].pageX;
-    touchEndY = e.touches[0].pageY;
-  });
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  const game = new Game();
+  touchEventController();
+  game.run();
+});
