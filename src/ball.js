@@ -19,7 +19,7 @@ export class Ball {
       { name : "ballTypeG", img : "./img/fruit/modified_size/img_size_160.png", radius : 41 },
       { name : "ballTypeH", img : "./img/fruit/modified_size/img_size_180.png", radius : 55 },
       { name : "ballTypeI", img : "./img/fruit/modified_size/img_size_200.png", radius : 66 },
-      { name : "ballTypeJ", img : "./img/fruit/modified_size/img_size_220.png", radius : 66 }
+      { name : "ballTypeJ", img : "./img/fruit/modified_size/img_size_220.png", radius : 70 }
     ]
 
     this.canvas = document.getElementById("canvas");
@@ -27,6 +27,7 @@ export class Ball {
     this.canvas.style.zIndex = "2";
     this.data = null;
     this.imgTag = null;
+    this.totalBallNum = 0;
   }
 
   // <=============================== ボールの生成 ===============================>
@@ -46,13 +47,14 @@ export class Ball {
 
   choice() {
     //0~ボールの種類の数までの数をランダムに生成し、その数値のインデックスのボールを選択する
-    let choicedBall = this.imgs[this.random(4)];
+    let choicedBall = this.imgs[this.random(6)];
 
     // 最初の果物5個は紫、紫、赤、オレンジ、オレンジ、みかんで生成する
     const firstChoicedBall = [0, 0, 1, 2, 2, 3];
     const ballList = this.World.bodies.filter(body => body.label === "Circle Body");
-    if (ballList.length < 5) {
-      choicedBall = this.imgs[firstChoicedBall[ballList.length]];
+    if (this.totalBallNum < 6) {
+      choicedBall = this.imgs[firstChoicedBall[this.totalBallNum]];
+      this.totalBallNum++;
     }
     
     return choicedBall;

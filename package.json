@@ -6,7 +6,10 @@
     "start": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress --mode development",
-    "prod": "webpack --progress --mode production"
+    "prod": "webpack --progress --mode production",
+    "lint:css": "stylelint **/*.{css,scss,sass}",
+    "fix:css": "stylelint —fix **/*.{css,scss,sass}",
+    "lint": "eslint --fix 'src/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -28,13 +31,23 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.5",
+    "postcss": "^8.4.5",
     "sass": "^1.46.0",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recess-order": "^3.0.0",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-scss": "^4.1.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.7.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "eslint": "^8.6.0",
+    "postcss-scss": "^4.0.2",
+    "stylelint-config-standard-scss": "^3.0.0"
+  }
 }

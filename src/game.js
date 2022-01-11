@@ -74,6 +74,7 @@ class Game {
     this.gameWrapper.appendChild(this.canvas);
     this.screen.init(); // 描画画面の初期化 // 得点の初期化
     this.setBall = this.ball.set(this.data); // 最初のボールの生成
+    this.ball.totalBallNum = 0;
   }
   // <=============================== 衝突検知 ===============================>
   collision() {
@@ -139,10 +140,10 @@ class Game {
     if (ballA.circleRadius === ballB.circleRadius) { // 衝突したボールのサイズが同一だった時
 
       for (let j = 0; j < game.ball.imgs.length; j++) {
-        if (ballA.circleRadius === (game.ball.imgs[j].radius * this.forCanvasHighResolution) && (j + 1) < game.ball.imgs.length) {
+        if (ballA.circleRadius === (game.ball.imgs[j].radius * this.forCanvasHighResolution) && j < game.ball.imgs.length - 1) {
           y -= game.ball.imgs[j + 1].radius;
           // ボールが消失する際の飛沫のエフェクトの描画
-          game.screen.showUnionEffect(x, y / this.forCanvasHighResolution, game.ball.imgs[j+1].radius * 2, game.ball.imgs[j].name);
+          game.screen.showUnionEffect(x, y / this.forCanvasHighResolution, game.ball.imgs[j + 1].radius * 2, game.ball.imgs[j].name);
           // ボールが消失する際の音の再生
           game.AudioPlayer.playSound("union");
           // 衝突して合体したボールの半径より一つ大きいボールを生成
@@ -158,7 +159,7 @@ class Game {
           setTimeout (() => {
             game.isCollisionAnimation = false;
           } ,80);
-        } else if (j === game.ball.imgs.length) { // すいかが一番大きいボールで合体イベントが起こらない
+        } else if (j === game.ball.imgs.length - 1) { // すいかが一番大きいボールで合体イベントが起こらない
 
           // game.screen.showUnionEffect(x, y, game.ball.imgs[j+1].radius * 2, game.ball.imgs[j].name);
           // game.AudioPlayer.playSound("union");
@@ -215,6 +216,7 @@ class Game {
             game.collisionBool = false;
             game.screen.showRemovingBallView();
             game.removeGameOverBalls(ballList);
+            this.ball.totalBallNum = 0;
           }
           else if (game.ballHeight < (game.gameOverHeight + 100)) { // ステージがいっぱいになり、終了条件に近づいていることを警告する
             this.setBall = ball.set();
