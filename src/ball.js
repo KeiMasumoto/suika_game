@@ -87,10 +87,10 @@ export class Ball {
     //描画していたボールはimgだけのため、剛体のボールを生成する。（ゲームエンジンのライブラリ使っているため）
     const ball = this.bodies.circle((x * this.forCanvasHighResolution) - (((innerWidth * this.forCanvasHighResolution) - (this.canvas.width)) / 2), y + data.radius * this.forCanvasHighResolution, data.radius * this.forCanvasHighResolution, {
       //ボールを追加
-      density: 0.01, // 密度: 単位面積あたりの質量
-      frictionAir: 0.05, // 空気抵抗(空気摩擦)
-      restitution: 0.6, // 弾力性
-      friction: 0.05, // 本体の摩擦
+      density: 0.75, // 密度: 単位面積あたりの質量
+      frictionAir: 0.005, // 空気抵抗(空気摩擦)
+      restitution: 0.2, // 弾力性
+      friction: 0.5, // 本体の摩擦
       render: {
         //ボールのレンダリングの設定
         sprite: {
@@ -100,7 +100,7 @@ export class Ball {
           yScale: 1 * this.forCanvasHighResolution,
         },
       },
-      timeScale: 1.25 * this.forCanvasHighResolution, //時間の倍率を設定(1で1倍速)
+      timeScale: 1.25, //時間の倍率を設定(1で1倍速)
     });
     this.matterWorld.add(this.World, ball);
     return ball;
@@ -116,7 +116,7 @@ export class Ball {
     const fadeOut = setInterval(() => {
       const fadeOutBall = this.bodies.circle(ball.position.x, ball.position.y + radius, radius, {
         //ボールを追加
-        density: 0.01, // 密度: 単位面積あたりの質量
+        density: 0.0, // 密度: 単位面積あたりの質量
         frictionAir: 0.05, // 空気抵抗(空気摩擦)
         restitution: 0.6, // 弾力性
         friction: 0.05, // 本体の摩擦
@@ -129,7 +129,7 @@ export class Ball {
             yScale: radius / ball.circleRadius,
           },
         },
-        timeScale: 1.5, //時間の倍率を設定(1で1倍速)
+        timeScale: 1.25, //時間の倍率を設定(1で1倍速)
       });
       radius = radius - (ball.circleRadius / 15);
       this.matterWorld.add(this.World, fadeOutBall);

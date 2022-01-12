@@ -80,7 +80,7 @@ export class Screen {
       if (imgs[i].name === type) {
         for (let j = 0; j < 6; j++) {
           const imgTag = document.createElement("img");
-          imgTag.setAttribute("class", "union-effect" + j);
+          imgTag.setAttribute("class", "union-effect" + (j + 1));
           imgTag.setAttribute("src", imgs[i][j]);
           imgTag.width = size;
           imgTag.height = size;

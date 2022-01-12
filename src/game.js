@@ -134,20 +134,25 @@ class Game {
     }
 
     const balls = [ballA, ballB];
-    let x = ballA.position.x / this.forCanvasHighResolution; // ボールのx座標を実際に描画されているサイズに合わせる
-    let y = ballA.position.y; // ボールのy座標は実際に描画されるサイズとキャンバスのサイズ両方ほしいのでそのままにしておく
+    const x1 = ballA.position.x / this.forCanvasHighResolution; // ボールのx座標を実際に描画されているサイズに合わせる
+    const y1 = ballA.position.y; // ボールのy座標は実際に描画されるサイズとキャンバスのサイズ両方ほしいのでそのままにしておく
+
+    const x2 = ballB.position.x / this.forCanvasHighResolution; // ボールのx座標を実際に描画されているサイズに合わせる
+    const y2 = ballB.position.y; // ボールのy座標は実際に描画されるサイズとキャンバスのサイズ両方ほしいのでそのままにしておく
+
+    let x = (x1 + x2) / 2;
+    let y = (y1 + y2) / 2;
 
     if (ballA.circleRadius === ballB.circleRadius) { // 衝突したボールのサイズが同一だった時
 
       for (let j = 0; j < game.ball.imgs.length; j++) {
         if (ballA.circleRadius === (game.ball.imgs[j].radius * this.forCanvasHighResolution) && j < game.ball.imgs.length - 1) {
-          y -= game.ball.imgs[j + 1].radius;
           // ボールが消失する際の飛沫のエフェクトの描画
           game.screen.showUnionEffect(x, y / this.forCanvasHighResolution, game.ball.imgs[j + 1].radius * 2, game.ball.imgs[j].name);
           // ボールが消失する際の音の再生
           game.AudioPlayer.playSound("union");
           // 衝突して合体したボールの半径より一つ大きいボールを生成
-          game.ball.create(x + ((innerWidth - (this.canvas.width / this.forCanvasHighResolution)) / 2), y, game.ball.imgs[j + 1]);
+          game.ball.create(x + ((innerWidth - (this.canvas.width / this.forCanvasHighResolution)) / 2), y - (game.ball.imgs[j + 1].radius) * 2, game.ball.imgs[j + 1]);
           // 差し替える
           game.removeBalls(balls);
           // 衝突して合体したボールの半径をとりあえず得点としている
@@ -160,12 +165,6 @@ class Game {
             game.isCollisionAnimation = false;
           } ,80);
         } else if (j === game.ball.imgs.length - 1) { // すいかが一番大きいボールで合体イベントが起こらない
-
-          // game.screen.showUnionEffect(x, y, game.ball.imgs[j+1].radius * 2, game.ball.imgs[j].name);
-          // game.AudioPlayer.playSound("union");
-          // game.removeBalls(balls); // 差し替える
-          // game.scorePoint = game.scorePoint + ballA.circleRadius; // 衝突して合体したボールの半径をとりあえず得点としている
-          // game.screen.addScore(game.scorePoint);
           game.isCollisionAnimation = true;
         }
       }

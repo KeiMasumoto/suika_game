@@ -17,6 +17,7 @@ class RigidBody {
     this.Composite.add(this.world, [ // 物理シミュレーションにオブジェクトを加える
       this.Bodies.rectangle(positionX, positionY, rectWidth, rectHeight, { // レクタングルを加える
         isStatic: true, // 固定する
+        friction: 1, // 本体の摩擦
         render: {
           // fillStyle: "brown", // 塗りつぶす色: CSSの記述法で指定
           fillStyle: color, // 塗りつぶす色: CSSの記述法で指定
