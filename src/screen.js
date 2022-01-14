@@ -6,7 +6,7 @@ export class Screen {
     this.endView = document.getElementById("endView");
     this.cautionBar = document.getElementById("cautionBar");
     this.score = document.getElementById("score");
-    this.sumScore = document.getElementById("ending-score-text");
+    this.sumScore = document.getElementById("endingScoreText");
     this.width = innerWidth;
     this.height = innerHeight;
     this.tags = [];
@@ -102,8 +102,8 @@ export class Screen {
       diff = time - oldTime;
       const id = requestAnimationFrame(update);
       if (diff > 1000) {
-        cancelAnimationFrame(id);
         screen.hiddenUnionEffect();
+        cancelAnimationFrame(id);
       }
     };
     requestAnimationFrame(update);

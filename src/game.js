@@ -61,7 +61,7 @@ class Game {
       },
     });
 
-    this.gameOverHeight = (this.canvas.height / this.forCanvasHighResolution) * 0.1; // 終了条件高さ
+    this.gameOverHeight = (this.canvas.height / this.forCanvasHighResolution) * 0.8; // 終了条件高さ
 
     return render
   }
@@ -95,7 +95,7 @@ class Game {
           if (ballA.circleRadius != 0 && ballB.circleRadius != 0) {
             game.union(ballA, ballB); // 同種のボールの合体
           }
-          game.ballHeight = game.maxHeight(); // 全ボールからもっともy座標の位置が高いものを取得
+          // game.ballHeight = game.maxHeight(); // 全ボールからもっともy座標の位置が高いものを取得
         }
       };
     });
@@ -119,7 +119,7 @@ class Game {
           if (ballA.circleRadius != 0 && ballB.circleRadius != 0) {
             game.union(ballA, ballB);// 同種のボールの合体
           }
-          game.ballHeight = game.maxHeight();// 全ボールからもっともy座標の位置が高いものを取得
+          // game.ballHeight = game.maxHeight();// 全ボールからもっともy座標の位置が高いものを取得
         }
       };
     });
@@ -152,7 +152,21 @@ class Game {
           // ボールが消失する際の音の再生
           game.AudioPlayer.playSound("union");
           // 衝突して合体したボールの半径より一つ大きいボールを生成
-          game.ball.create(x + ((innerWidth - (this.canvas.width / this.forCanvasHighResolution)) / 2), y - (game.ball.imgs[j + 1].radius) * 2, game.ball.imgs[j + 1]);
+          const ball = game.ball.create(x + ((innerWidth - (this.canvas.width / this.forCanvasHighResolution)) / 2), y - (game.ball.imgs[j + 1].radius) * 2, game.ball.imgs[j + 1]);
+          const renderRadius = ball.render.sprite.xScale;
+          let fadeInBallRadius = 0;
+
+          const update = () => {
+            fadeInBallRadius = fadeInBallRadius + (1 / 5);
+            const id = requestAnimationFrame(update);
+            ball.render.sprite.xScale = fadeInBallRadius;
+            ball.render.sprite.yScale = fadeInBallRadius;
+            if (renderRadius <= fadeInBallRadius) { // 2秒後にクリックを許可する
+              cancelAnimationFrame(id);
+            }
+          };
+          requestAnimationFrame(update);
+
           // 差し替える
           game.removeBalls(balls);
           // 衝突して合体したボールの半径をとりあえず得点としている
@@ -163,7 +177,7 @@ class Game {
           game.isCollisionAnimation = true;
           setTimeout (() => {
             game.isCollisionAnimation = false;
-          } ,80);
+          } ,160);
         } else if (j === game.ball.imgs.length - 1) { // すいかが一番大きいボールで合体イベントが起こらない
           game.isCollisionAnimation = true;
         }
@@ -207,17 +221,20 @@ class Game {
         diff = time - oldTime;
         const id = requestAnimationFrame(update);
         if (diff > 2000) { // 2秒後にクリックを許可する
+          game.ballHeight = game.maxHeight(); // 全ボールからもっともy座標の位置が高いものを取得
+          console.log("game.gameOverHeigh " + game.gameOverHeight);
+          console.log("game.ballHeight " + game.ballHeight);
           if (game.ballHeight < game.gameOverHeight) { // ある高さを積み上げたボールが超えるとゲーム終了
             this.positionYList = [];
+            this.scorePoint = 0;
             const ballList = this.World.bodies.filter(ball => ball.label === "Circle Body"); // 全ボールの取得
             game.screen.showBar(game.gameOverHeight);
-            console.log(ballList);
             game.collisionBool = false;
             game.screen.showRemovingBallView();
             game.removeGameOverBalls(ballList);
             this.ball.totalBallNum = 0;
           }
-          else if (game.ballHeight < (game.gameOverHeight + 100)) { // ステージがいっぱいになり、終了条件に近づいていることを警告する
+          else if (game.ballHeight < (game.gameOverHeight + 60)) { // ステージがいっぱいになり、終了条件に近づいていることを警告する
             this.setBall = ball.set();
             game.screen.showBar(game.gameOverHeight);
             this.screen.pointerEventsOn(game.canvas);
@@ -253,8 +270,12 @@ class Game {
           for (let i = 0; i < game.ball.imgs.length; i++) {
             if ((ballList[eleNum].circleRadius / this.forCanvasHighResolution) === game.ball.imgs[i].radius) {
               game.AudioPlayer.playSound("union");
+              console.log(game.ball);
+              console.log(game.ball.imgs[i].radius);
+              console.log(game.ball.imgs[i].name);
               game.screen.showUnionEffect(ballList[eleNum].position.x / this.forCanvasHighResolution, ballList[eleNum].position.y / this.forCanvasHighResolution, (game.ball.imgs[i].radius * 2), game.ball.imgs[i].name);
-              this.ball.removeBall(ballList[eleNum]);
+              // game.screen.showUnionEffect(ballList[eleNum].position.x / this.forCanvasHighResolution, ballList[eleNum].position.y / this.forCanvasHighResolution, (game.ball.imgs[i].radius * 2), game.ball.imgs[i].name);
+              game.ball.removeBall(ballList[eleNum]);
             }
           }
           eleNum += 1;
@@ -288,7 +309,7 @@ class Game {
     let height = innerHeight;
     if (ballList.length > 1) {
       if (ballList[index]) {
-        height =(ballList[index].position.y / this.forCanvasHighResolution) - ballList[index].circleRadius; // 座標リストのインデックスからどのボールが一番上かを特定して、ボールの最上部の高さを算出する
+        height = (ballList[index].position.y / this.forCanvasHighResolution) - (ballList[index].circleRadius / this.forCanvasHighResolution); // 座標リストのインデックスからどのボールが一番上かを特定して、ボールの最上部の高さを算出する
       }
     }
 
