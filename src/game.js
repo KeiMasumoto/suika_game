@@ -61,7 +61,7 @@ class Game {
       },
     });
 
-    this.gameOverHeight = (this.canvas.height / this.forCanvasHighResolution) * 0.8; // 終了条件高さ
+    this.gameOverHeight = (this.canvas.height / this.forCanvasHighResolution) * 0.1; // 終了条件高さ
 
     return render
   }
