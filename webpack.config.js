@@ -1,17 +1,20 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const outputPath = path.resolve(__dirname, 'src');
 
 module.exports = {
     mode: "development",
     devServer: {
-        static: "dist",
+        static: {
+            directory: outputPath,
+          },
         open: true
     },
     entry: './src/game.js',
     output: {
-        path: path.resolve(__dirname, 'dist/'),
-        publicPath: './',
+        // path: path.resolve(__dirname, 'dist/'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'index.js'
     },
     plugins: [
