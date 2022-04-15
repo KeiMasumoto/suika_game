@@ -10980,84 +10980,84 @@ class Screen {
     // ボールが削除された際の飛沫を画像として格納する
     const imgs = [{
       name: "ballTypeA",
-      0: "../img/fruit/purple/img_p1.png",
-      1: "../img/fruit/purple/img_p2.png",
-      2: "../img/fruit/purple/img_p3.png",
-      3: "../img/fruit/purple/img_p4.png",
-      4: "../img/fruit/purple/img_p5.png",
-      5: "../img/fruit/purple/img_p6.png"
+      0: "./img/fruit/purple/img_p1.png",
+      1: "./img/fruit/purple/img_p2.png",
+      2: "./img/fruit/purple/img_p3.png",
+      3: "./img/fruit/purple/img_p4.png",
+      4: "./img/fruit/purple/img_p5.png",
+      5: "./img/fruit/purple/img_p6.png"
     }, {
       name: "ballTypeB",
-      0: "../img/fruit/red/img_r1.png",
-      1: "../img/fruit/red/img_r2.png",
-      2: "../img/fruit/red/img_r3.png",
-      3: "../img/fruit/red/img_r4.png",
-      4: "../img/fruit/red/img_r5.png",
-      5: "../img/fruit/red/img_r6.png"
+      0: "./img/fruit/red/img_r1.png",
+      1: "./img/fruit/red/img_r2.png",
+      2: "./img/fruit/red/img_r3.png",
+      3: "./img/fruit/red/img_r4.png",
+      4: "./img/fruit/red/img_r5.png",
+      5: "./img/fruit/red/img_r6.png"
     }, {
       name: "ballTypeC",
-      0: "../img/fruit/orange/img_o1.png",
-      1: "../img/fruit/orange/img_o2.png",
-      2: "../img/fruit/orange/img_o3.png",
-      3: "../img/fruit/orange/img_o4.png",
-      4: "../img/fruit/orange/img_o5.png",
-      5: "../img/fruit/orange/img_o6.png"
+      0: "./img/fruit/orange/img_o1.png",
+      1: "./img/fruit/orange/img_o2.png",
+      2: "./img/fruit/orange/img_o3.png",
+      3: "./img/fruit/orange/img_o4.png",
+      4: "./img/fruit/orange/img_o5.png",
+      5: "./img/fruit/orange/img_o6.png"
     }, {
       name: "ballTypeD",
-      0: "../img/fruit/yellow/img_y1.png",
-      1: "../img/fruit/yellow/img_y2.png",
-      2: "../img/fruit/yellow/img_y3.png",
-      3: "../img/fruit/yellow/img_y4.png",
-      4: "../img/fruit/yellow/img_y5.png",
-      5: "../img/fruit/yellow/img_y6.png"
+      0: "./img/fruit/yellow/img_y1.png",
+      1: "./img/fruit/yellow/img_y2.png",
+      2: "./img/fruit/yellow/img_y3.png",
+      3: "./img/fruit/yellow/img_y4.png",
+      4: "./img/fruit/yellow/img_y5.png",
+      5: "./img/fruit/yellow/img_y6.png"
     }, {
       name: "ballTypeE",
-      0: "../img/fruit/green/img_g1.png",
-      1: "../img/fruit/green/img_g2.png",
-      2: "../img/fruit/green/img_g3.png",
-      3: "../img/fruit/green/img_g4.png",
-      4: "../img/fruit/green/img_g5.png",
-      5: "../img/fruit/green/img_g6.png"
+      0: "./img/fruit/green/img_g1.png",
+      1: "./img/fruit/green/img_g2.png",
+      2: "./img/fruit/green/img_g3.png",
+      3: "./img/fruit/green/img_g4.png",
+      4: "./img/fruit/green/img_g5.png",
+      5: "./img/fruit/green/img_g6.png"
     }, {
       name: "ballTypeF",
-      0: "../img/fruit/red/img_r1.png",
-      1: "../img/fruit/red/img_r2.png",
-      2: "../img/fruit/red/img_r3.png",
-      3: "../img/fruit/red/img_r4.png",
-      4: "../img/fruit/red/img_r5.png",
-      5: "../img/fruit/red/img_r6.png"
+      0: "./img/fruit/red/img_r1.png",
+      1: "./img/fruit/red/img_r2.png",
+      2: "./img/fruit/red/img_r3.png",
+      3: "./img/fruit/red/img_r4.png",
+      4: "./img/fruit/red/img_r5.png",
+      5: "./img/fruit/red/img_r6.png"
     }, {
       name: "ballTypeG",
-      0: "../img/fruit/orange/img_o1.png",
-      1: "../img/fruit/orange/img_o2.png",
-      2: "../img/fruit/orange/img_o3.png",
-      3: "../img/fruit/orange/img_o4.png",
-      4: "../img/fruit/orange/img_o5.png",
-      5: "../img/fruit/orange/img_o6.png"
+      0: "./img/fruit/orange/img_o1.png",
+      1: "./img/fruit/orange/img_o2.png",
+      2: "./img/fruit/orange/img_o3.png",
+      3: "./img/fruit/orange/img_o4.png",
+      4: "./img/fruit/orange/img_o5.png",
+      5: "./img/fruit/orange/img_o6.png"
     }, {
       name: "ballTypeH",
-      0: "../img/fruit/yellow/img_y1.png",
-      1: "../img/fruit/yellow/img_y2.png",
-      2: "../img/fruit/yellow/img_y3.png",
-      3: "../img/fruit/yellow/img_y4.png",
-      4: "../img/fruit/yellow/img_y5.png",
-      5: "../img/fruit/yellow/img_y6.png"
+      0: "./img/fruit/yellow/img_y1.png",
+      1: "./img/fruit/yellow/img_y2.png",
+      2: "./img/fruit/yellow/img_y3.png",
+      3: "./img/fruit/yellow/img_y4.png",
+      4: "./img/fruit/yellow/img_y5.png",
+      5: "./img/fruit/yellow/img_y6.png"
     }, {
       name: "ballTypeI",
-      0: "../img/fruit/white/img_w1.png",
-      1: "../img/fruit/white/img_w2.png",
-      2: "../img/fruit/white/img_w3.png",
-      3: "../img/fruit/white/img_w4.png",
-      4: "../img/fruit/white/img_w5.png",
-      5: "../img/fruit/white/img_w6.png"
+      0: "./img/fruit/white/img_w1.png",
+      1: "./img/fruit/white/img_w2.png",
+      2: "./img/fruit/white/img_w3.png",
+      3: "./img/fruit/white/img_w4.png",
+      4: "./img/fruit/white/img_w5.png",
+      5: "./img/fruit/white/img_w6.png"
     }, {
       name: "ballTypeJ",
-      0: "../img/fruit/red/img_r1.png",
-      1: "../img/fruit/red/img_r2.png",
-      2: "../img/fruit/red/img_r3.png",
-      3: "../img/fruit/red/img_r4.png",
-      4: "../img/fruit/red/img_r5.png",
-      5: "../img/fruit/red/img_r6.png"
+      0: "./img/fruit/red/img_r1.png",
+      1: "./img/fruit/red/img_r2.png",
+      2: "./img/fruit/red/img_r3.png",
+      3: "./img/fruit/red/img_r4.png",
+      4: "./img/fruit/red/img_r5.png",
+      5: "./img/fruit/red/img_r6.png"
     }]; // 画像として格納した画像を描画する
 
     for (let i = 0; i < imgs.length; i++) {
