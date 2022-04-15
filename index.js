@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/audio-player.js":
+/***/ "./src-player.js":
 /*!*****************************!*\
   !*** ./src/audio-player.js ***!
   \*****************************/
@@ -14,8 +14,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 class AudioPlayer {
   constructor() {
-    const bound = new Audio("bound", "../audio/bound.mp3");
-    const union = new Audio("union", "../audio/union.mp3");
+    const bound = new Audio("bound", "./audio/bound.mp3");
+    const union = new Audio("union", "./audio/union.mp3");
     this.data = [bound.data, union.data];
     this.audioContext = new AudioContext();
     window.AudioContext = window.AudioContext || window.webkitAudioContext; // 互換対応
@@ -11210,7 +11210,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _rigid_body__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rigid-body */ "./src/rigid-body.js");
 /* harmony import */ var _ball__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ball */ "./src/ball.js");
 /* harmony import */ var _screen__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./screen */ "./src/screen.js");
-/* harmony import */ var _audio_player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./audio-player */ "./src/audio-player.js");
+/* harmony import */ var _audio_player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! .-player */ "./src-player.js");
 
 
 
